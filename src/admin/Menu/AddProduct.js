@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../../auth";
 
-import { createProduct, getCategories } from "./apiAdmin";
+import { createProduct, getCategories } from "../apiAdmin";
 
 const AddProduct = () => {
   const [values, setValues] = useState({

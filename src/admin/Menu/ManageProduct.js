@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../../auth";
 import { Link } from "react-router-dom";
-import { getProducts, deleteProduct } from "./apiAdmin";
+import { getProducts, deleteProduct } from "../apiAdmin";
 
 const ManageProduct = () => {
   const [products, setProducts] = useState([]);

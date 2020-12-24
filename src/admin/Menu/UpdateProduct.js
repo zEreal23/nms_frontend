@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../../auth";
 
-import { getProduct, getCategories, updateProduct } from "./apiAdmin";
+import { getProduct, getCategories, updateProduct } from "../apiAdmin";
 
 const UpdateProduct = ({ match }) => {
   const [values, setValues] = useState({

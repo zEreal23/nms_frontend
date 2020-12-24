@@ -79,7 +79,7 @@ const Signup = () => {
           />
         </div>
 
-        <button className="form-input-btn" type="submit">
+        <button className="form-input-btn" type="submit" disabled={password.length < 6}>
           Create
         </button>
       </form>

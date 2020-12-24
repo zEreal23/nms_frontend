@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import Carousel from "react-bootstrap/Carousel";
 
 import MK from "../image/MK.png";
-import Card from "../core/Card";
+import CardMenu from "./CardMenu";
 import { getProducts } from "./apiCore";
 
 const Home = () => {
@@ -24,15 +25,39 @@ const Home = () => {
 
   return (
     <div className="container">
-      <img
-        src={MK}
-        className="rounded mx-auto d-block img-fluid"
-        alt="Responsive"
-      />
-       <h2 className="mb-4" style={{textAlign:'center'}}>Menu</h2>
-      <div className="row" style={{display:'flex' ,justifyContent: 'center' ,alignItems:'center'}}>
+      <Carousel>
+        <Carousel.Item>
+          <img className="d-block w-100" src={MK} alt="First slide" />
+          <Carousel.Caption>
+            <h3>First slide label</h3>
+            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+
+        <Carousel.Item>
+        <img className="d-block w-100" src={MK} alt="First slide" />
+          <Carousel.Caption>
+            <h3>Third slide label</h3>
+            <p>
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+            </p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      </Carousel>
+
+      <h2 className="mb-4" style={{ textAlign: "center" , margin: 10 }}>
+        Menu
+      </h2>
+      <div
+        className="row"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         {productsByArrial.map((product, i) => (
-          <Card key={i} product={product} />
+          <CardMenu key={i} product={product} />
         ))}
       </div>
     </div>

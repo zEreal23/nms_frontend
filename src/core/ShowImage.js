@@ -4,12 +4,12 @@ import { API } from "../config";
 
 const ShowImage = ({ item, url }) => {
   return (
-    <div className="product-img">
+    <div className="product-img container text-center">
       <img
         src={`${API}/${url}/photo/${item._id}`}
         alt={item.name}
         className="mb-3"
-        style={{ height: "200px", maxWidth: "100%" }}
+        style={{ height: "200px", maxWidth: "100%"}}
       />
     </div>
   );

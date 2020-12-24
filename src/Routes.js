@@ -4,24 +4,28 @@ import {BrowserRouter , Switch , Route} from 'react-router-dom'
 import Signup from './user/signup';
 import Signin from './user/signin';
 import Home from '../src/core/Home';
-import Menu from '../src/core/Menu';
-import AddCategort from '../src/admin/AddCategory';
-import AddProduct from '../src/admin/AddProduct';
-import UpdateProduct from '../src/admin/UpdateProduct';
-import ManageProduct from './admin/ManageProduct';
+import Header from '../src/core/Header';
+import AddCategort from '../src/admin/category/AddCategory';
+import AddProduct from '../src/admin/Menu/AddProduct';
+import UpdateProduct from '../src/admin/Menu/UpdateProduct';
+import ManageProduct from './admin/Menu/ManageProduct';
+import AdminDashboard from './admin/AdminDashboard'
+
+import AdminRoute from './auth/AdminRoute'
 
 function Routes() {
     return (
         <BrowserRouter>
-            <Menu/>
+            <Header/>
             <Switch>
                 <Route path="/" exact component={Home}/>
                 <Route path="/signin" exact component={Signin}/>
-                <Route path="/signup" exact component={Signup}/>
-                <Route path="/create/category" exact component={AddCategort}/>
-                <Route path="/create/product" exact component={AddProduct}/>
-                <Route path="/admin/product" exact component={ManageProduct}/>
-                <Route path="/admin/product/update/:productId" exact component={UpdateProduct}/>
+                <AdminRoute path="/admin/dashboard" exact component={AdminDashboard}/>
+                <AdminRoute path="/signup" exact component={Signup}/>
+                <AdminRoute path="/create/category" exact component={AddCategort}/>
+                <AdminRoute path="/create/product" exact component={AddProduct}/>
+                <AdminRoute path="/admin/product" exact component={ManageProduct}/>
+                <AdminRoute path="/admin/product/update/:productId" exact component={UpdateProduct}/>
             </Switch>
         </BrowserRouter>
     )

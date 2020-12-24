@@ -1,11 +1,12 @@
 import React, {useState } from "react";
 import { Redirect } from "react-router-dom";
+import {Button} from 'antd'
 
-import { signin, authenticate } from "../auth";
+import { signin, authenticate, isAuthenticated } from "../auth";
 import Welcome from "../image/IMG_7513.jpg";
 import "./Form.css";
 
-const Signup = () => {
+const Signin = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -16,6 +17,8 @@ const Signup = () => {
 
   const { email, password, loading, error, redirectToReferrer } = values;
 
+  const {user} = isAuthenticated();
+
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
@@ -23,7 +26,7 @@ const Signup = () => {
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: false });
-    signin({ email, password }).then((data) => {
+    signin({ email , password}).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
@@ -42,7 +45,7 @@ const Signup = () => {
     <div className="form-content-right">
       {showLoading()}
       {showError()}
-      <form onSubmit={clickSubmit} className="form" noValidate>
+      <form className="form" noValidate>
         <h1>You can login by filling out the information below.</h1>
         <div className="form-inputs">
           <label className="form-label">Email</label>
@@ -63,9 +66,12 @@ const Signup = () => {
           />
         </div>
 
-        <button className="form-input-btn" type="submit">
+        <Button 
+          className="form-input-btn" 
+          type="submit" disabled={!email || password.length < 6}
+          onClick={clickSubmit}>
           Login
-        </button>
+        </Button>
         {redirectUser()}
       </form>
     </div>
@@ -89,7 +95,11 @@ const Signup = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      return <Redirect to="/" />;
+      if(user && user.role === 1) {
+        return <Redirect to="/admin/dashboard"/>
+      } else {
+        return <Redirect to="/"/>
+      }
     }
   };
 
@@ -105,4 +115,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signin;
