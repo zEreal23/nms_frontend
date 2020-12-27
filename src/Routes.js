@@ -12,7 +12,7 @@ import ManageProduct from './admin/Menu/ManageProduct';
 import AdminDashboard from './admin/AdminDashboard'
 
 import AdminRoute from './auth/AdminRoute'
-
+import Cart from './core/Cart'
 function Routes() {
     return (
         <BrowserRouter>
@@ -26,6 +26,8 @@ function Routes() {
                 <AdminRoute path="/create/product" exact component={AddProduct}/>
                 <AdminRoute path="/admin/product" exact component={ManageProduct}/>
                 <AdminRoute path="/admin/product/update/:productId" exact component={UpdateProduct}/>
+                <Route path="/cart" exact component={Cart}/>
+
             </Switch>
         </BrowserRouter>
     )
