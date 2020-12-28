@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Menu } from "antd";
 import { Link, withRouter } from "react-router-dom";
-
 import {
   HomeOutlined,
   SettingOutlined,
@@ -10,9 +9,11 @@ import {
   TableOutlined,
   EditOutlined,
   LogoutOutlined,
+  SolutionOutlined,
 } from "@ant-design/icons";
 
 import { signout, isAuthenticated } from "../auth";
+import {itemTotal} from './CartOrder';
 
 const { SubMenu, Item, ItemGroup } = Menu;
 
@@ -96,12 +97,17 @@ const Header = ({ history }) => {
           </ItemGroup>
         </SubMenu>
       )}
-
+        <Item key="cart" icon={<SolutionOutlined />} className="float-right">
+        <Link to="/cart" path >
+          Food <sup><small className="cart-badge">{itemTotal()}</small></sup>
+        </Link>
+      </Item>
       <Item key="home" icon={<UserOutlined />} className="float-right">
         <Link to="/" path>
           Home
         </Link>
       </Item>
+      
     </Menu>
     /* <div>
       <ul className="nav nav-tabs bg-dark mr-auto">
