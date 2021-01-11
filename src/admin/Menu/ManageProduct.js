@@ -15,6 +15,7 @@ const ManageProduct = () => {
         console.log(data.error);
       } else {
         setProducts(data);
+        console.log(data[0].category.name);
       }
     });
   };
@@ -35,44 +36,65 @@ const ManageProduct = () => {
 
   return (
     <div
-      className="container"
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        margin: 10,
       }}
+      className=" row d-flex justify-content-center"
     >
-      <div className="row">
-        <div className="col-12">
-          <h2 className="text-center" style={{ marginTop: 10 }}>
-            Total {products.length} Menus
-          </h2>
-          <hr />
-          {products.map((p, i) => (
-            <li
-              key={i}
-              className="list-group-item d-flex justify-content-between align-items-center"
-              style={{ margin: 10 }}
-            >
-              <strong style={{ marginRight: 10 }}>{p.name}</strong>
-              <Link to={`/admin/product/update/${p._id}`}>
-                <span
-                  className="badge badge-warning bage-pill"
-                  style={{ marginRight: 10 }}
-                >
-                  Update
-                </span>
-              </Link>
-              <span
-                onClick={() => destroy(p._id)}
-                className="badge badge-danger badge-pill"
-              >
-                Delete
-              </span>
-            </li>
-          ))}
-        </div>
+      <div className="col ">
+        <h2 style={{ marginTop: 10 }}>Total {products.length} Menus</h2>
       </div>
+
+      <div>
+        <Link to="/create/product">
+          <span type="button" className="btn btn-outline-success">
+            Add New Menu
+          </span>
+        </Link>
+      </div>
+      <hr />
+
+      <table className="table text-center col-12">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Manage</th>
+          </tr>
+        </thead>
+        {products.map((m, i) => (
+          <tbody>
+            <tr key={i}>
+              <td>{m.category.name}</td>
+              <td>{m.name}</td>
+              <td>{m.price}</td>
+              <td>
+                {" "}
+                <Link to={`/admin/product/update/${m._id}`}>
+                  <span
+                    type="button"
+                    className="btn btn-primary"
+                    style={{ marginRight: 10 }}
+                  >
+                    Edit
+                  </span>
+                </Link>
+                <button
+                  onClick={() => destroy(m._id)}
+                  type="button"
+                  className="btn btn-danger"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        ))}
+      </table>
     </div>
   );
 };

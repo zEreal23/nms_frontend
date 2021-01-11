@@ -3,24 +3,27 @@ import {BrowserRouter , Switch , Route} from 'react-router-dom'
 
 import Signup from './user/signup';
 import Signin from './user/signin';
-import Home from '../src/core/Home';
-import Header from '../src/core/Header';
+
+import Menu from './core/Menu';
+import Header from '../src/core/Header'; 
+import Cart from './core/Cart'
+
+import AdminPage from './admin/AdminPage';
 import AddCategort from '../src/admin/category/AddCategory';
 import AddProduct from '../src/admin/Menu/AddProduct';
 import UpdateProduct from '../src/admin/Menu/UpdateProduct';
 import ManageProduct from './admin/Menu/ManageProduct';
-import AdminDashboard from './admin/AdminDashboard'
 
 import AdminRoute from './auth/AdminRoute'
-import Cart from './core/Cart'
+
 function Routes() {
     return (
         <BrowserRouter>
             <Header/>
             <Switch>
-                <Route path="/" exact component={Home}/>
+                <Route path="/Menu" exact component={Menu}/>
                 <Route path="/signin" exact component={Signin}/>
-                <AdminRoute path="/admin/dashboard" exact component={AdminDashboard}/>
+                <AdminRoute path="/home/admin/" exact component={AdminPage}/>
                 <AdminRoute path="/signup" exact component={Signup}/>
                 <AdminRoute path="/create/category" exact component={AddCategort}/>
                 <AdminRoute path="/create/product" exact component={AddProduct}/>

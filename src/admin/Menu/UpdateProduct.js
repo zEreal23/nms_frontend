@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import { isAuthenticated } from "../../auth";
-
+import { Link } from "react-router-dom";
 import { getProduct, getCategories, updateProduct } from "../apiAdmin";
 
 const UpdateProduct = ({ match }) => {
@@ -32,7 +32,7 @@ const UpdateProduct = ({ match }) => {
     error,
     createdProduct,
     formData,
-    redirectToProfile
+    redirectToProfile,
   } = values;
 
   const init = (productId) => {
@@ -137,7 +137,7 @@ const UpdateProduct = ({ match }) => {
       <div className="form-group">
         <label className="text-muted">Category</label>
         <select onChange={handleChange("category")} className="form-control">
-          <option>Please select</option>
+          <option>select category</option>
           {categories &&
             categories.map((c, i) => (
               <option key={i} value={c._id}>
@@ -147,7 +147,18 @@ const UpdateProduct = ({ match }) => {
         </select>
       </div>
 
-      <button className="btn btn-outline-primary">Update Product</button>
+      <button className="btn btn-outline-primary" style={{ marginRight: 10 }}>
+        Update Product
+      </button>
+      <Link to={"/admin/product"}>
+        <span
+          type="button"
+          className="btn btn-outline-warning"
+          style={{ marginRight: 10 }}
+        >
+          Back
+        </span>
+      </Link>
     </form>
   );
 
@@ -176,13 +187,13 @@ const UpdateProduct = ({ match }) => {
       </div>
     );
 
-    const redirectUser = () => {
-        if(redirectToProfile) {
-            if(!error){
-                return <Redirect to="/"/>
-            }
-        }
+  const redirectUser = () => {
+    if (redirectToProfile) {
+      if (!error) {
+        return <Redirect to="/admin/product" />;
+      }
     }
+  };
 
   return (
     <div className="row">

@@ -26,7 +26,7 @@ const { SubMenu, Item, ItemGroup } = Menu;
 };*/
 
 const Header = ({ history }) => {
-  const [current, setCurrent] = useState("Signin");
+  const [current, setCurrent] = useState("signin");
 
   const handleClick = (e) => {
     console.log(e.key);
@@ -35,7 +35,7 @@ const Header = ({ history }) => {
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       {!isAuthenticated() && (
-        <Item key="Signin" icon={<UserOutlined />} className="float-right">
+        <Item key="signin" icon={<UserOutlined />} className="float-right">
           <Link to="/signin" path>
             Login
           </Link>
@@ -99,97 +99,17 @@ const Header = ({ history }) => {
       )}
         <Item key="cart" icon={<SolutionOutlined />} className="float-right">
         <Link to="/cart" path >
-          Food <sup><small className="cart-badge">{itemTotal()}</small></sup>
+          list <sup><small className="cart-badge">{itemTotal()}</small></sup>
         </Link>
       </Item>
-      <Item key="home" icon={<UserOutlined />} className="float-right">
-        <Link to="/" path>
-          Home
+      <Item key="Menu" icon={<UserOutlined />} className="float-right">
+        <Link to="/Menu" path>
+          Menu
         </Link>
       </Item>
       
     </Menu>
-    /* <div>
-      <ul className="nav nav-tabs bg-dark mr-auto">
-        <li className="nav-item">
-          <Link className="nav-link" style={isActive(history, "/")} to="/">
-            Home
-          </Link>
-        </li>
-
-        {!isAuthenticated() && (
-          <div>
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                style={isActive(history, "/signin")}
-                to="/signin"
-              >
-                Login
-              </Link>
-            </li>
-          </div>
-        )}
-
-        {isAuthenticated() && (
-          <Fragment>
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                style={isActive(history, "/signup")}
-                to="/signup"
-              >
-                New Employee
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                style={isActive(history, "/create/category")}
-                to="/create/category"
-              >
-                Add Category
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                style={isActive(history, "/create/product")}
-                to="/create/product"
-              >
-                Add Menu
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                style={isActive(history, "/admin/product")}
-                to="/admin/product"
-              >
-                Manage Product
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <span
-                className="nav-link"
-                style={{ cursor: "pointer", color: "#ffff" }}
-                onClick={() =>
-                  signout(() => {
-                    history.push("/");
-                  })
-                }
-              >
-                Signout
-              </span>
-            </li>
-          </Fragment>
-        )}
-      </ul>
-    </div>*/
+   
   );
 };
 
