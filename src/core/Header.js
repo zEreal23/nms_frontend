@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Menu } from "antd";
+import { Menu, Drawer, Button } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import {
-  HomeOutlined,
   SettingOutlined,
   UserOutlined,
   TeamOutlined,
@@ -10,10 +9,11 @@ import {
   EditOutlined,
   LogoutOutlined,
   SolutionOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 
 import { signout, isAuthenticated } from "../auth";
-import {itemTotal} from './CartOrder';
+import { itemTotal } from "./CartOrder";
 
 const { SubMenu, Item, ItemGroup } = Menu;
 
@@ -27,89 +27,113 @@ const { SubMenu, Item, ItemGroup } = Menu;
 
 const Header = ({ history }) => {
   const [current, setCurrent] = useState("signin");
+  const [visible, setVisible] = useState(false);
+
+  const showDrawer = () => {
+    setVisible(true);
+  };
+
+  const onClose = () => {
+    setVisible(false);
+  };
 
   const handleClick = (e) => {
     console.log(e.key);
     setCurrent(e.key);
   };
+
   return (
-    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-      {!isAuthenticated() && (
-        <Item key="signin" icon={<UserOutlined />} className="float-right">
-          <Link to="/signin" path>
-            Login
-          </Link>
-        </Item>
-      )}
-
+    <>
       {isAuthenticated() && (
-        <SubMenu
-          key="SubMenu"
-          icon={<SettingOutlined />}
-          title="Setting"
-          className="float-right"
-        >
-          <ItemGroup title="Manage">
-            <Item key="Table" icon={<EditOutlined />}>
-              {" "}
-              <Link to="/table" path>
-                Table
-              </Link>
-            </Item>
+        <>
+          <Button onClick={showDrawer}>
+            <MenuOutlined />
+          </Button>
+          <Drawer
+            title="Menu"
+            placement="left"
+            closable={false}
+            onClose={onClose}
+            visible={visible}
+          >
+            <Menu mode="inline">
+              <Menu.Item key="1">
+                <Link to="/admin/home" path>
+                  Home
+                </Link>
+              </Menu.Item>
 
-            <Item key="Category" icon={<TableOutlined />}>
-              <Link to="/create/category" path>
-                Add Category
-              </Link>
-            </Item>
+              <Menu.Item key="2">
+                <Link to="/admin/product" path>
+                  Category & Menu
+                </Link>
+              </Menu.Item>
 
-            <Item key="Menu" icon={<TableOutlined />}>
-              <Link to="/create/product" path>
-                Add Menu
-              </Link>
-            </Item>
+              <Menu.Item key="3">
+                <Link to="/users" path>
+                  Staff
+                </Link>
+              </Menu.Item>
 
-            <Item key="Mage Menu" icon={<TableOutlined />}>
-              <Link to="/admin/product" path>
-                Manage Menu
-              </Link>
-            </Item>
+              <Menu.Item key="4">
+                <Link to="/admin/home" path>
+                  Table
+                </Link>
+              </Menu.Item>
 
-            <Item key="Staff" icon={<TeamOutlined />}>
-              <Link to="/signup" path>
-                Add Staff
-              </Link>
-            </Item>
-          </ItemGroup>
+              <Menu.Item key="5">
+                <Link to="/admin/home" path>
+                  Report
+                </Link>
+              </Menu.Item>
 
-          <ItemGroup title="User">
-            <Item
-              key="Logout"
-              icon={<LogoutOutlined />}
-              onClick={() =>
-                signout(() => {
-                  history.push("/");
-                })
-              }
-            >
-              Logout
-            </Item>
-          </ItemGroup>
-        </SubMenu>
+              <Menu.Item key="5">
+                <Link to="/admin/home" path>
+                  Guide
+                </Link>
+              </Menu.Item>
+
+              <Menu.Item
+                key="Menu"
+                icon={<UserOutlined />}
+                className="float-right"
+              >
+                <Link to="/Menu" path>
+                  Menu
+                </Link>
+              </Menu.Item>
+
+              <Menu.Item
+                key="Logout"
+                onClick={() =>
+                  signout(() => {
+                    history.push("/signin");
+                  })
+                }
+              >
+                Logout
+              </Menu.Item>
+            </Menu>
+          </Drawer>
+        </>
       )}
-        <Item key="cart" icon={<SolutionOutlined />} className="float-right">
-        <Link to="/cart" path >
-          list <sup><small className="cart-badge">{itemTotal()}</small></sup>
-        </Link>
-      </Item>
-      <Item key="Menu" icon={<UserOutlined />} className="float-right">
-        <Link to="/Menu" path>
-          Menu
-        </Link>
-      </Item>
-      
-    </Menu>
-   
+      <div>
+        <Menu>
+          <Menu.Item
+            key="cart"
+            icon={<SolutionOutlined />}
+            className="float-right"
+          >
+            <Link to="/cart" path>
+              list{" "}
+              <sup>
+                <small className="cart-badge">{itemTotal()}</small>
+              </sup>
+            </Link>
+          </Menu.Item>
+        </Menu>
+      </div>
+    </>
   );
 };
 

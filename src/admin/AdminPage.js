@@ -7,17 +7,18 @@ import Promotion from "../image/tag.png";
 import Table from "../image/chair.png";
 import Report from "../image/dashboard.png";
 import Staff from "../image/user.png";
+import Guide from '../image/guide.png'
 
 const AdminPage = () => {
   const Rowler = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    margin: 10,
+    margin: 10 ,
   };
 
   const card = {
-    width: 250,
+    width: 230,
     textAlign: "center",
     borderRadius: "40px",
     border: "1px solid",
@@ -57,7 +58,7 @@ const AdminPage = () => {
 
       <div className="row" style={Rowler}>
         <div>
-          <Link to="/signup">
+          <Link to="/users">
             <Card style={card}>
               <img className="d-block w-100" src={Staff} alt="First slide" />
               <h5>Staff</h5>
@@ -77,8 +78,8 @@ const AdminPage = () => {
         <div>
           <Link to="/create/product">
             <Card style={card}>
-              <img className="d-block w-100" src={Menu} alt="First slide" />
-              <h5>Catagory & Menu</h5>
+              <img className="d-block w-100" src={Guide} alt="First slide" />
+              <h5>Guide</h5>
             </Card>
           </Link>
         </div>

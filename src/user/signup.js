@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 
 import { signup } from "../auth";
-import Welcome from "../image/employee.png";
-import "./Form.css";
+import { Form, Input, Button, Card } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 const Signup = () => {
   const [values, setValues] = useState({
@@ -11,21 +12,21 @@ const Signup = () => {
     password: "",
     error: "",
     success: false,
+    redirectToReferrer: false
   });
 
-  const { name, email, password, success, error } = values;
+  const { name, email, password, success, error, redirectToReferrer } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
 
   const clickSubmit = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     setValues({ ...values, error: false });
     signup({ name, email, password }).then((data) => {
       if (data.error) {
-        
-        setValues({ ...values, error: data.error, success: false });
+        setValues({ ...values, error: data.error, success: false ,redirectToReferrer: false});
       } else {
         setValues({
           ...values,
@@ -34,56 +35,111 @@ const Signup = () => {
           password: "",
           error: "",
           success: true,
+          redirectToReferrer: true
         });
       }
     });
   };
 
-  const signUpForm = () => (
-    <div className="form-content-right">
-      <form onSubmit={clickSubmit} className="form" noValidate>
-        {showSuccess()}
-        {showError()}
-        <h1>Create new Employees by filling out the information below.</h1>
-        <div className="form-inputs">
-          <label className="form-label">Username</label>
-          <input
-            className="form-input"
-            type="text"
-            name="username"
-            placeholder="Enter your username"
-            value={name}
-            onChange={handleChange("name")}
-          />
-        </div>
-        <div className="form-inputs">
-          <label className="form-label">Email</label>
-          <input
-            className="form-input"
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={handleChange("email")}
-          />
-        </div>
-        <div className="form-inputs">
-          <label className="form-label">Password</label>
-          <input
-            className="form-input"
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={handleChange("password")}
-          />
-        </div>
+  const redirectUser = () => {
+    if (redirectToReferrer) {
+        return <Redirect to="/users"/>;
+    }
+  };
 
-        <button className="form-input-btn" type="submit" disabled={password.length < 6}>
-          Create
-        </button>
-      </form>
-    </div>
+  const signUpForm = () => (
+    <Form
+      name="normal_login"
+      className="login-form"
+      initialValues={{
+        remember: true,
+      }}
+      onFinish={clickSubmit}
+    >
+      
+      <Form.Item
+        name="nickname"
+        rules={[
+          {
+            required: true,
+            message: "Please input your Username!",
+          },
+        ]}
+      >
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          type="text"
+          placeholder="nickname"
+          value={name}
+          onChange={handleChange("name")}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name="username"
+        rules={[
+          {
+            required: true,
+            message: "Please input your Username!",
+          },
+        ]}
+      >
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={handleChange("email")}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name="password"
+        rules={[
+          {
+            required: true,
+            message: "Please input your password!",
+          },
+        ]}
+        hasFeedback
+      >
+        <Input.Password
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          value={password}
+          onChange={handleChange("password")}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name="confirm"
+        dependencies={['password']}
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: 'Please confirm your password!',
+          },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+
+              return Promise.reject('The two passwords that you entered do not match!');
+            },
+          }),
+        ]}
+      >
+        <Input.Password  prefix={<LockOutlined className="site-form-item-icon" />}/>
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" className="login-form-button">
+          Create Stuff
+        </Button>
+      </Form.Item>
+      {redirectUser()}
+    </Form>
   );
 
   const showError = () => (
@@ -105,14 +161,18 @@ const Signup = () => {
   );
 
   return (
-    <>
-      <div className="form-container">
-        <div className="form-content-left">
-          <img className="form-img-signup" src={Welcome} alt="spaceship" />
-        </div>
-        {signUpForm()}
+    <div className="row">
+      <div
+        className="col"
+        style={{ justifyContent: "center", alignItems: "center" }}
+      >
+        <Card title="Create Stuff" bordered={true} style={{ width: 300 }}>
+          {showSuccess()}
+          {showError()}
+          {signUpForm()}
+        </Card>
       </div>
-    </>
+    </div>
   );
 };
 

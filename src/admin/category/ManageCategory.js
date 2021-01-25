@@ -1,32 +1,45 @@
 import React, { useEffect, useState } from "react";
+import { Drawer } from "antd";
+
 import { Link } from "react-router-dom";
 
 import { isAuthenticated } from "../../auth";
-import { getProducts, deleteProduct } from "../apiAdmin";
-import "../../admin/Menu/ManageStyle.css";
+import { getCategories, deleteCategory } from "../apiAdmin";
+import "../Menu/ManageStyle.css";
+import AddCategory from "./AddCategory";
 
-const ManageProduct = () => {
-  const [products, setProducts] = useState([]);
+const ManageCategory = () => {
+  const [categories, setCategories] = useState([]);
 
   const { user, token } = isAuthenticated();
 
-  const loadMenu = () => {
-    getProducts().then((data) => {
+  const [visible, setVisible] = useState(false);
+
+  const showDrawer = () => {
+    console.log(visible);
+    setVisible(true);
+  };
+
+  const onClose = () => {
+    setVisible(false);
+  };
+
+  const loadCategories = () => {
+    getCategories().then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        setProducts(data);
-        //console.log(data[0].category.name);
+        setCategories(data);
       }
     });
   };
 
-  const destroy = (productId) => {
-    deleteProduct(productId, user._id, token).then((data) => {
+  const delCategory = (categoryId) => {
+    deleteCategory(categoryId, user._id, token).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        loadMenu();
+        loadCategories();
       }
     });
   };
@@ -41,46 +54,57 @@ const ManageProduct = () => {
       }}
       className=" row d-flex justify-content-center"
     >
-      <Link to={"/admin/home"}>
+      <Link to={'/admin/home'}>
         <span
           type="button"
           className="btn btn-outline-dark"
-          style={{ marginRight: 2, width: 100 }}
+          style={{ marginRight: 2 ,width: 100  }}
         >
           Back
         </span>
       </Link>
       <div className="col ">
-        <h2 style={{ marginTop: 10 }}>Total {products.length} Menus</h2>
+        <h2 style={{ marginTop: 10 }}>Total {categories.length} Categories</h2>
       </div>
 
       <div>
-        <Link to="/create/product">
-          <span type="button" className="btn btn-outline-success">
-            Add New Menu
-          </span>
-        </Link>
+        <span
+          type="button"
+          className="btn btn-outline-success"
+          onClick={showDrawer}
+        >
+          + Add
+        </span>
       </div>
+
+      <Drawer
+        title="Category"
+        placement="right"
+        closeable={false}
+        onClose={onClose}
+        visible={visible}
+        getContainer={false}
+        store={{ position: "absolute" }}
+      >
+        <div>
+          <AddCategory />
+        </div>
+      </Drawer>
       <hr />
 
-      <table className="table text-center col-12">
+      <table className="table text-center row-8">
         <thead className="thead-dark">
           <tr>
-            <th scope="col">Category</th>
             <th scope="col">Name</th>
-            <th scope="col">Price</th>
             <th scope="col">Manage</th>
           </tr>
         </thead>
-        {products.map((m, i) => (
+        {categories.map((c, i) => (
           <tbody>
             <tr key={i}>
-              <td>{m.category.name}</td>
-              <td>{m.name}</td>
-              <td>{m.price}</td>
+              <td>{c.name}</td>
               <td>
-                {" "}
-                <Link to={`/admin/product/update/${m._id}`}>
+                <Link to={`/admin/category/update/${c._id}`}>
                   <span
                     type="button"
                     className="btn btn-primary"
@@ -89,8 +113,9 @@ const ManageProduct = () => {
                     Edit
                   </span>
                 </Link>
+
                 <button
-                  onClick={() => destroy(m._id)}
+                  onClick={() => delCategory(c._id)}
                   type="button"
                   className="btn btn-danger"
                 >
@@ -105,7 +130,7 @@ const ManageProduct = () => {
   );
 
   useEffect(() => {
-    loadMenu();
+    loadCategories();
   }, []);
 
   return (
@@ -115,4 +140,4 @@ const ManageProduct = () => {
   );
 };
 
-export default ManageProduct;
+export default ManageCategory;

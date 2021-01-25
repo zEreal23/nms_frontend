@@ -46,7 +46,8 @@ const CardMenu = ({
             removeItem(product._id);
             setRun(!run); // run useEffect in parent Cart
           }}
-          className="btn btn-outline-danger mt-2 mb-2"
+          className="btn btn-outline-danger mb-2"
+          style={{ width: "100%"}}
         >
           Remove
         </button>
@@ -65,10 +66,7 @@ const CardMenu = ({
   const ShowCartUpdateOptions = (cartUpdate) => {
     return (
       cartUpdate && (
-        <div className="input-group mb-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Quantity</span>
-          </div>
+        <div className="input-group text-center mb-2" style={{ width: '100%'}}>
           <input
             type="number"
             className="form-control"
@@ -85,14 +83,12 @@ const CardMenu = ({
       {shouldRedirect(redirect)}
       <Card
         title={product.name}
-        extra={<a href="#">More</a>}
-        style={{ width: 300, margin: 10 }}
+        style={{ width: 300, margin: 10 , borderRadius:20 , borderWidth:1 , borderColor:'black'}}
       >
         <ShowImage item={product} url="product" />
-        <p>Price :{product.price}</p>
+        <p>Price :{product.price}TWD</p>
         {ShowAddtoCart(ShowAddtoCartButton)}
         {ShowCartUpdateOptions(cartUpdate)}
-
         {showRemoveButton(ShowRemoveProductButton)}
       </Card>
     </div>

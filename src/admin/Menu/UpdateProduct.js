@@ -37,6 +37,7 @@ const UpdateProduct = ({ match }) => {
 
   const init = (productId) => {
     getProduct(productId).then((data) => {
+      console.log(data)
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
@@ -101,7 +102,7 @@ const UpdateProduct = ({ match }) => {
   };
 
   const newPostForm = () => (
-    <form className="mb-3" onSubmit={clickSubmit}>
+    <form className="mb-3" onSubmit={clickSubmit} style={{ width: 500 }}>
       <h4>Post Photo</h4>
       <div className="form-group">
         <label className="btn btn-secondary">
@@ -197,7 +198,15 @@ const UpdateProduct = ({ match }) => {
 
   return (
     <div className="row">
-      <div className="col-md-8 offset-md-2">
+      <div
+        className="col-md-8 offset-md-2"
+        style={{
+          marginTop: 20,
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+        }}
+      >
         {showLoading()}
         {showSuccess()}
         {showError()}

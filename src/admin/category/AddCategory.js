@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 
 import { isAuthenticated } from "../../auth";
-import { Link } from "react-router-dom";
 import { createCategory } from "../apiAdmin";
 
 const AddCategory = () => {
   const [name, setName] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [redirectToReferrer , setredirectToReferrer] = useState(false);
 
   // destructure user and token from localstorage
   const { user, token } = isAuthenticated();
@@ -28,26 +29,10 @@ const AddCategory = () => {
       } else {
         setError("");
         setSuccess(true);
+        setredirectToReferrer(true)
       }
     });
   };
-
-  const newCategoryFom = () => (
-    <form onSubmit={clickSubmit}>
-      <div className="form-group">
-        <label className="text-muted">Name</label>
-        <input
-          type="text"
-          className="form-control"
-          onChange={handleChange}
-          value={name}
-          autoFocus
-          required
-        />
-      </div>
-      <button className="btn btn-outline-primary">Create Category</button>
-    </form>
-  );
 
   const showSuccess = () => {
     if (success) {
@@ -70,10 +55,34 @@ const AddCategory = () => {
 
   const goBack = () => (
     <div className="mt-5">
-      <Link to="/" className="text-warning">
-        Back to Home
+      <Link to="/admin/product" className="text-warning">
+       Go Back
       </Link>
     </div>
+  );
+
+  const redirectUser = () => {
+    if (redirectToReferrer) {
+        return <Redirect to="/admin/product"/>;
+    }
+  };
+
+  const newCategoryFom = () => (
+    <form onSubmit={clickSubmit}>
+      <div className="form-group">
+        <label className="text-muted">Name</label>
+        <input
+          type="text"
+          className="form-control"
+          onChange={handleChange}
+          value={name}
+          autoFocus
+          required
+        />
+      </div>
+      <button className="btn btn-outline-primary">Create Category</button>
+      {redirectUser()}
+    </form>
   );
 
   return (

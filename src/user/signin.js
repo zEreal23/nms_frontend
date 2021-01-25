@@ -1,10 +1,10 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import {Button} from 'antd'
+import { Form, Input, Button, Card } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import { signin, authenticate, isAuthenticated } from "../auth";
-import Welcome from "../image/IMG_7513.jpg";
-import "./Form.css";
+
 
 const Signin = () => {
   const [values, setValues] = useState({
@@ -17,16 +17,16 @@ const Signin = () => {
 
   const { email, password, loading, error, redirectToReferrer } = values;
 
-  const {user} = isAuthenticated();
+  const { user } = isAuthenticated();
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
 
   const clickSubmit = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     setValues({ ...values, error: false, loading: false });
-    signin({ email , password}).then((data) => {
+    signin({ email, password }).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
@@ -34,7 +34,7 @@ const Signin = () => {
           setValues({
             ...values,
             redirectToReferrer: true,
-            error: ""
+            error: "",
           });
         });
       }
@@ -42,7 +42,7 @@ const Signin = () => {
   };
 
   const signInForm = () => (
-    <div className="form-content-right">
+    /*<div className="form-content-right">
       {showLoading()}
       {showError()}
       <form className="form" noValidate>
@@ -74,7 +74,56 @@ const Signin = () => {
         </Button>
         {redirectUser()}
       </form>
-    </div>
+    </div>*/
+    <Form
+      name="normal_login"
+      className="login-form"
+      initialValues={{
+        remember: true,
+      }}
+      onFinish={clickSubmit}
+    >
+      <Form.Item
+        name="username"
+        rules={[
+          {
+            required: true,
+            message: "Please input your Username!",
+          },
+        ]}
+      >
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={handleChange("email")}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name="password"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your password!',
+          },
+        ]}
+        hasFeedback
+      >
+        <Input.Password 
+          prefix={<LockOutlined className="site-form-item-icon" />} 
+          value={password}
+          onChange={handleChange("password")}/>
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" className="login-form-button">
+          Log in
+        </Button>
+        {redirectUser()}
+      </Form.Item>
+    </Form>
   );
 
   const showError = () => (
@@ -95,23 +144,27 @@ const Signin = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      if(user && user.role === 1) {
-        return <Redirect to="/home/admin"/>
+      if (user && user.role === 1) {
+        return <Redirect to="/admin/home"/>;
       } else {
-        return <Redirect to="/"/>
+        return <Redirect to="/" />;
       }
     }
   };
 
   return (
-    <>
-      <div className="form-container">
-        <div className="form-content-left">
-          <img className="form-img" src={Welcome} alt="spaceship" />
-        </div>
-        {signInForm()}
+    <div className="row">
+      <div
+        className="col"
+        style={{ display:'flex' ,justifyContent: "center", alignContent: "center" }}
+      >
+        <Card title="Login" bordered={true} style={{ width: 300, borderRadius: 20 , marginTop: 150 }}>
+          {showLoading()}
+          {showError()}
+          {signInForm()}
+        </Card>
       </div>
-    </>
+    </div>
   );
 };
 
