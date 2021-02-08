@@ -25,27 +25,17 @@ const Home = () => {
 
   return (
     <div className="container">
-      <Carousel style={{borderRadius:20, marginTop:30}}>
-        <Carousel.Item>
-          <img className="d-block w-100" src={MK} alt="First slide" style={{borderRadius:30}}/>
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
+      <Carousel>
+          <Carousel.Item>
+            <img className="d-block w-100" src={MK} alt="First slide" />
+          </Carousel.Item>
 
-        <Carousel.Item>
-        <img className="d-block w-100" src={MK} alt="First slide" style={{borderRadius:30}}/>
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
-          </Carousel.Caption>
-        </Carousel.Item>
+          <Carousel.Item>
+            <img className="d-block w-100" src={MK} alt="First slide" />
+          </Carousel.Item>
       </Carousel>
 
-      <h2 className="mb-4" style={{ textAlign: "center" , margin: 10 }}>
+      <h2 className="mb-4" style={{ textAlign: "center", margin: 10 }}>
         Menu
       </h2>
       <div

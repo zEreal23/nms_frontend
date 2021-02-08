@@ -64,31 +64,31 @@ const Header = ({ history }) => {
               </Menu.Item>
 
               <Menu.Item key="2">
-                <Link to="/admin/product" path>
+                <Link to="/admin/product">
                   Category & Menu
                 </Link>
               </Menu.Item>
 
               <Menu.Item key="3">
-                <Link to="/users" path>
+                <Link to="/users">
                   Staff
                 </Link>
               </Menu.Item>
 
               <Menu.Item key="4">
-                <Link to="/admin/home" path>
+                <Link to="/admin/home">
                   Table
                 </Link>
               </Menu.Item>
 
               <Menu.Item key="5">
-                <Link to="/admin/home" path>
+                <Link to="/admin/home">
                   Report
                 </Link>
               </Menu.Item>
 
               <Menu.Item key="5">
-                <Link to="/admin/home" path>
+                <Link to="/admin/home">
                   Guide
                 </Link>
               </Menu.Item>

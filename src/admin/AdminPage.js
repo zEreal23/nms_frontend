@@ -1,37 +1,39 @@
 import React from "react";
-import { Card } from "antd";
+import { Card,} from "antd";
 import { Link } from "react-router-dom";
 
-import Menu from "../image/Menu.png";
+import MenuFood from "../image/Menu.png";
 import Promotion from "../image/tag.png";
 import Table from "../image/chair.png";
 import Report from "../image/dashboard.png";
-import Staff from "../image/user.png";
-import Guide from '../image/guide.png'
+import Staff from "../image/user.png"; 
+import Guide from "../image/guide.png";
+
 
 const AdminPage = () => {
   const Rowler = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    margin: 10 ,
+    margin: 5,
   };
 
   const card = {
-    width: 230,
+    width: 200,
+    height: 230,
     textAlign: "center",
     borderRadius: "40px",
     border: "1px solid",
     margin: "10px",
   };
 
-  return (
-    <div>
+  const Allmenu = () => (
+    <>
       <div className="row" style={Rowler}>
         <div>
           <Link to="/admin/product">
             <Card style={card}>
-              <img className="d-block w-100" src={Menu} alt="First slide" />
+              <img className="d-block w-100" src={MenuFood} alt="First slide" />
               <h5>Catagory & Menu</h5>
             </Card>
           </Link>
@@ -84,6 +86,12 @@ const AdminPage = () => {
           </Link>
         </div>
       </div>
+    </>
+  );
+
+  return (
+    <div>
+      <Allmenu />
     </div>
   );
 };

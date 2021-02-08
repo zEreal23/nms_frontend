@@ -33,7 +33,7 @@ const Cart = () => {
   };
   const noOrder = () => (
     <h2>
-      Your not have any Foodorder
+      Your don't have any Food order
       <br />
       <Link to="/Menu"></Link>{" "}
     </h2>
@@ -41,7 +41,7 @@ const Cart = () => {
 
   return (
     <div className="container">
-      <div className="row">
+      <div className="row" style={{ flex: 1 , justifyContent: "center" , alignItems: "center"}}>
         <div className="col-6">
           {items.length > 0 ? ShowItems(items) : noOrder()}
           <hr />
