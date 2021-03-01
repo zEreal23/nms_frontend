@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 
 import { isAuthenticated } from "../../auth";
-import { createCategory } from "../apiAdmin";
+import {  getAllTable , createTable } from "../apiAdmin";
 
-const AddCategory = () => {
-  const [name, setName] = useState("");
+const AddTable = () => {
+  const [noTable, setNoTable] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [redirectToReferrer , setredirectToReferrer] = useState(false);
+  const [redirectToReferrer, setredirectToReferrer] = useState(false);
 
   // destructure user and token from localstorage
   const { user, token } = isAuthenticated();
 
   const handleChange = (e) => {
     setError("");
-    setName(e.target.value);
+    setNoTable(e.target.value);
   };
 
   const clickSubmit = (e) => {
@@ -23,7 +23,7 @@ const AddCategory = () => {
     setError("");
     setSuccess(false);
     // make request to api to create category
-    createCategory(user._id, token, { name }).then((data) => {
+    createTable(user._id, token, { noTable }).then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
@@ -32,6 +32,12 @@ const AddCategory = () => {
         setredirectToReferrer(true)
       }
     });
+  };
+
+  const redirectUser = () => {
+    if (redirectToReferrer) {
+        return <Redirect to="/admin/table"/>;
+    }
   };
 
   const showSuccess = () => {
@@ -53,39 +59,34 @@ const AddCategory = () => {
     }
   };
 
-  const redirectUser = () => {
-    if (redirectToReferrer) {
-        return <Redirect to="/admin/product"/>;
-    }
-  };
-
-  const newCategoryFom = () => (
+  const createTableForm = () => (
     <form onSubmit={clickSubmit}>
       <div className="form-group">
-        <label className="text-muted">Name</label>
+        <label className="text-muted">NO. Table</label>
         <input
           type="text"
           className="form-control"
           onChange={handleChange}
-          value={name}
+          value={noTable}
           autoFocus
           required
         />
       </div>
-      <button className="btn btn-outline-primary">Create Category</button>
+      <button className="btn btn-outline-primary">Create Table</button>
       {redirectUser()}
     </form>
   );
-
+  
+  
   return (
     <div className="row">
       <div className="col-md-8 offset-md-2">
         {showSuccess()}
         {showError()}
-        {newCategoryFom()}
+        {createTableForm()}
       </div>
     </div>
   );
 };
 
-export default AddCategory;
+export default AddTable;

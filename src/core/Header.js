@@ -17,14 +17,6 @@ import { itemTotal } from "./CartOrder";
 
 const { SubMenu, Item, ItemGroup } = Menu;
 
-/*const isActive = (history, path) => {
-  if (history.location.pathname === path) {
-    return { color: "#ff9900" };
-  } else {
-    return { color: "#ffffff" };
-  }
-};*/
-
 const Header = ({ history }) => {
   const [current, setCurrent] = useState("signin");
   const [visible, setVisible] = useState(false);

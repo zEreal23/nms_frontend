@@ -11,9 +11,6 @@ import { isAuthenticated } from "../../auth";
 
 const ManageUser = () => {
   const [users, setUsers] = useState([]);
-
-  const { user, token } = isAuthenticated();
-
   const [visible, setVisible] = useState(false);
 
   const showDrawer = () => {
@@ -25,23 +22,30 @@ const ManageUser = () => {
     setVisible(false);
   };
 
+  const destroy = (userId) => {
+    const {token } = isAuthenticated();
+    deleteUser(userId, token).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        loadUsers();
+      }
+    });
+  };
+
+  const delConfirmed = (userId) => {
+    let answer = window.confirm("Are you sure want to delete?",userId)
+    if(answer){
+      destroy(userId)
+    }
+  }
+
   const loadUsers = () => {
     getUsers().then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
         setUsers(data);
-      }
-    });
-  };
-
-  const delUser = (userDelId) => {
-    console.log(userDelId)
-    deleteUser(userDelId, user._id, token).then((data) => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        loadUsers();
       }
     });
   };
@@ -78,7 +82,7 @@ const ManageUser = () => {
         </div>
 
         <Drawer
-          title="Category"
+          title="Staff"
           placement="right"
           closeable={false}
           onClose={onClose}
@@ -96,7 +100,7 @@ const ManageUser = () => {
           {users.map((u, i) => (
             <div key={i}>
               <Card
-                title={u.name}
+                title={`nickname: ${u.name}`}
                 bordered={true}
                 style={{
                   width: 250,
@@ -118,8 +122,7 @@ const ManageUser = () => {
                     }}
                   />
                 </div>
-                <p>{u._id}</p>
-                <p>{u.role}</p>
+                <p>role: {u.role}</p>
                 <Link to={`/admin/user/update/${u._id}`}>
                   <span
                     type="button"
@@ -131,7 +134,7 @@ const ManageUser = () => {
                 </Link>
 
                 <button
-                  onClick={() => delUser(u._id)}
+                  onClick={() => delConfirmed(u._id)}
                   type="button"
                   className="btn btn-danger"
                 >

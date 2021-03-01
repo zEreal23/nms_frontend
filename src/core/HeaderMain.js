@@ -1,133 +1,109 @@
 import React, { useState } from "react";
-import { Layout, Menu } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { Layout, Menu, Button, Dropdown, Breadcrumb } from "antd";
+import { Link, useLocation, withRouter } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   HomeOutlined,
+  DownOutlined,
 } from "@ant-design/icons";
 
-import MenuFood from "../image/Menu.png";
-import Promotion from "../image/tag.png";
-import Table from "../image/chair.png";
-import Report from "../image/dashboard.png";
-import Staff from "../image/user.png";
-import Guide from "../image/guide.png";
+import MenuinSidebar from "../component/Layout/MenuinSidebar";
+import logo from "../image/LOGONMD.png";
 import "./index.css";
-import { signout } from "../auth";
+import { signout, isAuthenticated } from "../auth";
 
-const { Header, Sider, Content } = Layout;
+const { Header, Sider, Content, Footer } = Layout;
 
-const LayoutWithRoute = ({ children , history }) => {
-  const [collapsed, setCollapsed] = useState(true);
+const LayoutWithRoute = ({ children, history }) => {
+  const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
 
   const ToggleButton = () => {
     setCollapsed(!collapsed);
   };
 
+  const dropdownMenu = () => (
+    <Menu>
+      <Menu.Item key="/admin/home">
+        <Link to="/admin/home" />
+        Home
+      </Menu.Item>
+
+      <Menu.Item key="/admin/home">
+        <Link to="/admin/home" />
+        Profile
+      </Menu.Item>
+
+      <Menu.Item
+        onClick={() =>
+          signout(() => {
+            history.push("/signin");
+          })
+        }
+      >
+        Log out
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }}>
-          {React.createElement(
-            collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-            {
-              className: "trigger",
-              onClick: ToggleButton,
-            }
-          )}
-          <Menu style={{ float: "right"}}>
-            <Menu.Item
-              key="Logout"
-              onClick={() =>
-                signout(() => {
-                  history.push("/signin");
-                })
-              }
-            >
-              Logout
-            </Menu.Item>
-          </Menu>
-        </Header> 
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          className="site-layout-background"
+        >
+          <div className="logo">
+            <img src={logo} style={{ height: 40, width: "auto" }} />
+          </div>
+          <MenuinSidebar />
+        </Sider>
 
         <Layout>
-          <Sider
-            trigger={null}
-            collapsible
-            collapsed={collapsed}
-            className="site-layout-background"
-          >
-            <Menu mode="inline" defaultSelectedKeys={[location.pathname]}>
-              <Menu.Item key="/admin/home" icon={<HomeOutlined />}>
-                <Link to="/admin/home">Home</Link>
-              </Menu.Item>
-              <Menu.Item
-                key="/admin/product"
-                icon={
-                  <img
-                    src={MenuFood}
-                    alt="First slide"
-                    style={{ height: "25px", width: "25px" }}
-                  />
-                }
-              >
-                <Link to="/admin/product">Category & Menu</Link>
-              </Menu.Item>
-              <Menu.Item
-                key="/users"
-                icon={
-                  <img
-                    src={Staff}
-                    alt="First slide"
-                    style={{ height: "25px", width: "25px" }}
-                  />
-                }
-              >
-                <Link to="/users">Staff</Link>
-              </Menu.Item>
+          <Header className="site-layout-background" style={{ padding: 0 }}>
+            {React.createElement(
+              collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+              {
+                className: "trigger",
+                onClick: ToggleButton,
+              }
+            )}
 
-              <Menu.Item
-                key="/admin/table"
-                icon={
-                  <img
-                    src={Table}
-                    alt="First slide"
-                    style={{ height: "25px", width: "25px" }}
-                  />
-                }
-              >
-                <Link to="/admin/table">Table</Link>
-              </Menu.Item>
+            <Dropdown overlay={dropdownMenu}>
+              <Button style={{ margin: 15, float: "right", borderRadius: 25 }}>
+                {`${isAuthenticated().user.name}`}
+                <DownOutlined />
+              </Button>
+            </Dropdown>
+          </Header>
 
-              <Menu.Item
-                key="/admin/report"
-                icon={
-                  <img
-                    src={Report}
-                    alt="First slide"
-                    style={{ height: "25px", width: "25px" }}
-                  />
-                }
-              >
-                <Link to="/admin/report">Report</Link>
-              </Menu.Item>
-            </Menu>
-          </Sider>
-          <Content
-            className="site-layout-background"
-            style={{
-              margin: "24px 16px",
-              padding: 24,
-              minHeight: 280,
-            }}
-          >
-            {children}
+          <Content style={{ height:'100%'}}>
+            <Breadcrumb style={{ margin: "10px 16px" }}>
+              <Breadcrumb.Item>Home</Breadcrumb.Item>
+              <Breadcrumb.Item>List</Breadcrumb.Item>
+              <Breadcrumb.Item>App</Breadcrumb.Item>
+            </Breadcrumb>
+            <div
+              className="site-layout-background"
+              style={{
+                margin: "10px",
+                padding: 1,
+                height: "100%",
+              }}
+            >
+              {children}
+            </div>
           </Content>
+          <Footer style={{ textAlign: "center" , button: 0 }}>
+            Namodin ©2021 Created by zEreal23
+          </Footer>
         </Layout>
       </Layout>
     </>
   );
 };
 
-export default LayoutWithRoute;
+export default withRouter(LayoutWithRoute);

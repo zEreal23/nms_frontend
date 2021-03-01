@@ -1,54 +1,158 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Form, Input, Button, Select } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import { isAuthenticated } from "../../auth";
 import { getUser, updateUser } from "../apiAdmin";
 
 const UpdateUser = ({ match }) => {
-  const [name, setName] = useState("");
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [values, setValue] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "",
+    error: false,
+    success: false,
+  });
 
-  const { user, token } = isAuthenticated();
+  const [form] = Form.useForm();
 
-  const init = (userEidtId) => {
-    console.log("User "+userEidtId)
-    console.log ("Admin "+user._id)
-    getUser(userEidtId).then((data) => {
-      console.log(data)
+  const { Option } = Select;
+
+  const { name, email, password, role } = values;
+
+  const { token } = isAuthenticated();
+
+  const init = (userId) => {
+    getUser(userId, token).then((data) => {
       if (data.error) {
-        setError(data.error);
+        console.log(data.error);
       } else {
-        setName(data.name);
+        console.log(data);
+        setValue({
+          ...values,
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          role: data.role,
+        });
       }
     });
   };
 
   useEffect(() => {
-    init(match.params.userEidtId);
-    console.log(match.params.userEidtId);
+    init(match.params.userId);
   }, []);
 
-  const handleChange = (e) => {
-    setError("");
-    setName(e.target.value);
+  const handleChange = (name) => (e) => {
+    setValue({ ...values, error: false, [name]: e.target.value });
   };
 
-  const clickSubmit = (event) => {
-    event.preventDefault();
-    setError("");
-    updateUser(match.params.userEidtId, user._id, token, { name })
-    .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          setName("");
-        }
+  const clickSubmit = () => {
+    updateUser(match.params.userId, token, { name }).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setValue({
+          ...values,
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          role: data.role,
+        });
       }
-    );
+    });
   };
 
-  const newPostForm = () => (
+  const onRoleChange = (role) => {
+    switch (role) {
+      case "Admin":
+        form.setFieldsValue({
+          note: "Can Access to data and edit everything",
+        });
+        return;
+
+      case "Staff":
+        form.setFieldsValue({
+          note: "Hi, lady!",
+        });
+        return;
+
+      case "Chef":
+        form.setFieldsValue({
+          note: "Hi there!",
+        });
+        return;
+    }
+  };
+
+  const updateForm = (name, email, password, role) => (
+    <Form
+      name="normal_login"
+      className="login-form"
+      initialValues={{
+        remember: true,
+      }}
+      onFinish={clickSubmit}
+    >
+      <Form.Item
+        name={name}
+      >
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          type="text"
+          //placeholder="Input nickname"
+          value={values.name}
+          onChange={handleChange("name")}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name="Email"
+      >
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          type="email"
+          placeholder="example@domain.com"
+          value={email}
+          onChange={handleChange("email")}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name="password"
+        hasFeedback
+      >
+        <Input.Password
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          value={password}
+          onChange={handleChange("password")}
+        />
+      </Form.Item>
+
+      <Form.Item name="role" label="Role">
+          <Select
+            placeholder="Select a option and change input text above"
+            onChange={onRoleChange("role")}
+            value={role}
+            allowClear
+          >
+            <Option value="admin">Admin</Option>
+            <Option value="staff">Staff</Option>
+            <Option value="chef">Chef</Option>
+          </Select>
+        </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" className="login-form-button">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+
+  const newUpdateForm = (name, email, password, role) => (
     <form onSubmit={clickSubmit}>
       <h4>Edit Form</h4>
 
@@ -57,19 +161,48 @@ const UpdateUser = ({ match }) => {
         <input
           type="text"
           className="form-control"
-          onChange={handleChange}
+          onChange={handleChange("name")}
           value={name}
           autoFocus
           required
-          style={{ width: 400 }}
+        />
+
+        <label className="text-muted">Email</label>
+        <input
+          type="text"
+          className="form-control"
+          onChange={handleChange("email")}
+          value={email}
+          autoFocus
+          required
+        />
+
+        <label className="text-muted">Password</label>
+        <input
+          type="text"
+          className="form-control"
+          onChange={handleChange("Password")}
+          value={password}
+          autoFocus
+          required
         />
       </div>
 
-      <button className="btn btn-outline-primary" style={{ marginRight: 10 }}>
-        Update User
+      <label className="text-muted">Role</label>
+      <input
+        type="text"
+        className="form-control"
+        onChange={handleChange("role")}
+        value={role}
+        autoFocus
+        required
+      />
+
+      <button className="btn btn-outline-primary" style={{ margin: 10 }}>
+        Update
       </button>
 
-      <Link to={"/admin/product"}>
+      <Link to={"/users"}>
         <span
           type="button"
           className="btn btn-outline-warning"
@@ -83,13 +216,16 @@ const UpdateUser = ({ match }) => {
 
   return (
     <div className="row">
-      <div className="col" 
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-
-      }}>{newPostForm()}</div>
+      <div
+        className="col"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {newUpdateForm(name, email, password, role)}
+      </div>
     </div>
   );
 };

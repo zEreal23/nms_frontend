@@ -1,22 +1,25 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import Signup from "./user/signup";
 import Signin from "./user/signin";
 
 import Menu from "./core/Menu";
-import Header from "../src/core/Header";
 import Cart from "./core/Cart";
 
 import AdminPage from "./admin/AdminPage";
+import adminCategoryAndMenu from "./admin/adminCategoryandMenu";
 import AddCategort from "../src/admin/category/AddCategory";
 import UpdateCategory from "../src/admin/category/UpdateCategory";
+
 import AddProduct from "../src/admin/Menu/AddProduct";
 import UpdateProduct from "../src/admin/Menu/UpdateProduct";
-import adminCategoryAndMenu from "./admin/adminCategoryandMenu";
-import ManageUsers from "./admin/user/ManageUser.";
 
+
+import ManageUsers from "./admin/user/ManageUser.";
 import UpdateUser from "./admin/user/UpdateUser";
+
+import ManageTable from './admin/table/ManageTable'
+import UpdateTable from './admin/table/UpdateTable'
 
 import AdminRoute from "./auth/AdminRoute";
 import MenuRoute from "./auth/MenuRoute";
@@ -47,9 +50,19 @@ function Routes() {
           component={UpdateCategory}
         />
         <AdminRoute
-          path="/admin/user/update/:userEidtId"
+          path="/admin/user/update/:userId"
           exact
           component={UpdateUser}
+        />
+        <AdminRoute
+          path="/admin/table"
+          exact
+          component={ManageTable}
+        />
+        <AdminRoute
+          path="/admin/table/update/:tableId"
+          exact
+          component={UpdateTable}
         />
         <CartRoute path="/cart" exact component={Cart} />
         <MenuRoute path="/Menu" exact component={Menu} />

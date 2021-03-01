@@ -4,12 +4,12 @@ import { Drawer,Pagination , Card } from "antd";
 import { Link } from "react-router-dom";
 
 import { isAuthenticated } from "../../auth";
-import { getCategories, deleteCategory } from "../apiAdmin";
+import { getAllTable, deleteTable } from "../apiAdmin";
 import "../Menu/ManageStyle.css";
-import AddCategory from "./AddCategory";
+import AddTable from './AddTable';
 
-const ManageCategory = () => {
-  const [categories, setCategories] = useState([]);
+const ManageTable = () => {
+  const [tables, setTable] = useState([]);
 
   const { user, token } = isAuthenticated();
 
@@ -24,22 +24,22 @@ const ManageCategory = () => {
     setVisible(false);
   };
 
-  const loadCategories = () => {
-    getCategories().then((data) => {
+  const loadTable = () => {
+    getAllTable().then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        setCategories(data);
+        setTable(data);
       }
     });
   };
 
-  const delCategory = (categoryId) => {
-    deleteCategory(categoryId, user._id, token).then((data) => {
+  const delTable = (categoryId) => {
+    deleteTable(categoryId, user._id, token).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        loadCategories();
+        loadTable();
       }
     });
   };
@@ -55,7 +55,7 @@ const ManageCategory = () => {
       className=" row d-flex justify-content-center"
     >
       <div className="col ">
-        <h2 style={{ marginTop: 10 }}>Total {categories.length} Categories</h2>
+        <h2 style={{ marginTop: 10 }}>Total {tables.length} Table</h2>
       </div>
 
       <div>
@@ -64,7 +64,7 @@ const ManageCategory = () => {
           className="btn btn-outline-success"
           onClick={showDrawer}
         >
-          + Add
+          Add Table
         </span>
       </div>
 
@@ -78,7 +78,7 @@ const ManageCategory = () => {
         store={{ position: "absolute" }}
       >
         <div>
-          <AddCategory />
+          <AddTable />
         </div>
       </Drawer>
       <hr />
@@ -90,12 +90,12 @@ const ManageCategory = () => {
             <th scope="col">Manage</th>
           </tr>
         </thead>
-        {categories.map((c, i) => (
+        {tables.map((data, index) => (
           <tbody>
-            <tr key={i}>
-              <td>{c.name}</td>
+            <tr key={index}>
+              <td>{data.noTable}</td>
               <td>
-                <Link to={`/admin/category/update/${c._id}`}>
+                <Link to={`/admin/table/update/${data._id}`}>
                   <span
                     type="button"
                     className="btn btn-primary"
@@ -106,7 +106,7 @@ const ManageCategory = () => {
                 </Link>
 
                 <button
-                  onClick={() => delCategory(c._id)}
+                  onClick={() => delTable(data._id)}
                   type="button"
                   className="btn btn-danger"
                 >
@@ -118,12 +118,12 @@ const ManageCategory = () => {
         ))}
       </table>
       </Card>
-      <Pagination defaultCurrent={1} pageSize={5} total={categories.length} />
+      <Pagination defaultCurrent={1} pageSize={5} total={tables.length} />
     </div>
   );
 
   useEffect(() => {
-    loadCategories();
+    loadTable();
   }, []);
 
   return (
@@ -133,4 +133,4 @@ const ManageCategory = () => {
   );
 };
 
-export default ManageCategory;
+export default ManageTable;

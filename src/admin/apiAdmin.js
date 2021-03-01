@@ -1,5 +1,11 @@
 import { API } from "../config";
 
+/** User API
+ * get data
+ * create user
+ * put user
+ * del user
+*/
 export const getUsers = () => {
   return fetch(`${API}/users`, {
     method: "GET",
@@ -10,9 +16,14 @@ export const getUsers = () => {
     .catch((err) => console.log(err));
 };
 
-export const getUser = (userEidtId) => {
-  return fetch(`${API}/user/${userEidtId}`, {
+export const getUser = (userId , token) => {
+  return fetch(`${API}/user/${userId}`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then((response) => {
       console.log(response);
@@ -21,8 +32,8 @@ export const getUser = (userEidtId) => {
     .catch((err) => console.log(err));
 };
 
-export const updateUser = (userEditId, userId, token, user) => {
-  return fetch(`${API}/user/${userEditId}/${userId}`, {
+export const updateUser = (userId, token, user) => {
+  return fetch(`${API}/user/${userId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -37,8 +48,8 @@ export const updateUser = (userEditId, userId, token, user) => {
     .catch((err) => console.log(err));
 };
 
-export const deleteUser = (userDelId, userId, token) => {
-  return fetch(`${API}/user/${userDelId}/${userId}`, {
+export const deleteUser = ( userId, token) => {
+  return fetch(`${API}/user/${userId}`, {
     method: "DELETE",
     headers: {
       Accept: "application/json",
@@ -52,6 +63,12 @@ export const deleteUser = (userDelId, userId, token) => {
     .catch((err) => console.log(err));
 };
 
+/** Category API
+ * get data
+ * create
+ * put
+ * del
+ */
 export const createCategory = (userId, token, category) => {
   return fetch(`${API}/category/create/${userId}`, {
     method: "POST",
@@ -85,23 +102,6 @@ export const updateCategory = (categoryId, userId, token, category) => {
       return response.json();
     })
     .catch((err) => console.log(err));
-};
-
-export const createProduct = (userId, token, product) => {
-  return fetch(`${API}/product/create/${userId}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: product,
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 };
 
 export const getCategory = (categoryId) => {
@@ -138,6 +138,12 @@ export const deleteCategory = (categoryId, userId, token) => {
     })
     .catch((err) => console.log(err));
 };
+
+/**Order API
+ * get data
+ * status
+ * put
+ */
 
 export const listOrders = (userId, token) => {
   return fetch(`${API}/order/list/${userId}`, {
@@ -201,6 +207,23 @@ export const getProducts = () => {
     .catch((err) => console.log(err));
 };
 
+export const createProduct = (userId, token, product) => {
+  return fetch(`${API}/product/create/${userId}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: product,
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const deleteProduct = (productId, userId, token) => {
   return fetch(`${API}/product/${productId}/${userId}`, {
     method: "DELETE",
@@ -240,3 +263,80 @@ export const updateProduct = (productId, userId, token, product) => {
     })
     .catch((err) => console.log(err));
 };
+
+/**table API
+ * Get table data
+ * Create table
+ * Delete table
+ * put table
+ */
+export const getTable = (tableId) => {
+  return fetch(`${API}/table/${tableId}`, {
+    method: "GET",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getAllTable = () => {
+  return fetch(`${API}/table`, {
+    method: "GET",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const createTable = (userId, token, table) => {
+  return fetch(`${API}/table/create/${userId}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(table),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const updateTable = (tableId, userId, token, table) => {
+  return fetch(`${API}/table/${tableId}/${userId}`, {
+    method: "PUT",
+    headers: {
+      // content type?
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(table),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const deleteTable = (tableId, userId, token) => {
+  return fetch(`${API}/table/${tableId}/${userId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
