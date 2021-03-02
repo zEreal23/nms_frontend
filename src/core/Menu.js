@@ -57,7 +57,7 @@ const Home = ({ match }) => {
           <CardMenu key={i} product={product} />
         ))}
         <div style={{ bottom: 10, position: "fixed" }}>
-          <Link to="/cart" style={{ marginRight: 10}}>
+          <Link to= {`/cart/${match.params.tableId}`} >
             <span
               type="button"
               className="btn btn-outline-success"

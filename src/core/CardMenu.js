@@ -81,7 +81,6 @@ const CardMenu = ({
 
   return (
     <div>
-      {shouldRedirect(redirect)}
 
       
         <table className="table text-center" style={{ width: "auto"}}>
