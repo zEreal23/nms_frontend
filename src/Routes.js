@@ -74,7 +74,7 @@ function Routes() {
           exact
           component={UpdateTable}
         />
-        <CartRoute path="/cart" exact component={Cart} />
+        <CartRoute path="/cart/:tableId" exact component={Cart} />
         <MenuRoute path="/Menu/:tableId" exact component={Menu} />
       </Switch>
     </BrowserRouter>

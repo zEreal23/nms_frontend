@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 import CardMenu from "./CardMenu";
 import { getCart } from "./CartOrder";
 import Checkout from "./Checkout";
-
-const Cart = () => {
+import { getTable } from "../admin/apiAdmin";
+const Cart = ({match}) => {
   const [items, setItems] = useState([]);
   const [run, setRun] = useState(false);
+  const [Table, setNotable] = useState([]);
+  const [error, setError] = useState(false);
+
+
   useEffect(() => {
+    init(match.params.tableId)
     setItems(getCart());
   }, [run]);
 
@@ -37,6 +42,16 @@ const Cart = () => {
       <Link to="/Menu"></Link>{" "}
     </h2>
   );
+  
+  const init = (tableId) => {
+    getTable(tableId).then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setNotable(data);
+      }
+    });
+  };
 
   return (
     <div className="container">
@@ -44,8 +59,9 @@ const Cart = () => {
         <div className="col-6">
           {items.length > 0 ? ShowItems(items) : noOrder()}
           <hr />
+          <p>{Table.noTable}</p>
           <h2 className="mb-4">Summary</h2>
-          <Checkout products={items} />
+          <Checkout products={items} tableId={Table._id} />
           <hr />
         </div>
       </div>
