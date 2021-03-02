@@ -48,7 +48,7 @@ const CardMenu = ({
             setRun(!run); // run useEffect in parent Cart
           }}
           className="btn btn-outline-danger mb-2"
-          style={{ width: "100%"}}
+          style={{ width: "100%" }}
         >
           Remove
         </button>
@@ -67,7 +67,7 @@ const CardMenu = ({
   const ShowCartUpdateOptions = (cartUpdate) => {
     return (
       cartUpdate && (
-        <div className="input-group text-center mb-2" style={{ width: '100%'}}>
+        <div className="input-group text-center mb-2" style={{ width: "100%" }}>
           <input
             type="number"
             className="form-control"
@@ -82,16 +82,25 @@ const CardMenu = ({
   return (
     <div>
       {shouldRedirect(redirect)}
-      <Card
-        title={product.name}
-        style={{ width: 300, margin: 10 , borderRadius:20 , borderWidth:1 , borderColor:'black'}}
-      >
-        <ShowImage item={product} url="product" />
-        <p>Price :{product.price}TWD</p>
-        {ShowAddtoCart(ShowAddtoCartButton)}
-        {ShowCartUpdateOptions(cartUpdate)}
-        {showRemoveButton(ShowRemoveProductButton)}
-      </Card>
+
+      
+        <table className="table text-center" style={{ width: "auto"}}>
+          <tbody>
+            <tr>
+              <td>
+                <ShowImage item={product} url="product" />
+              </td>
+              <td>
+                <p>Price :{product.price}TWD</p>
+              </td>
+              <td>
+                {ShowAddtoCart(ShowAddtoCartButton)}
+                {ShowCartUpdateOptions(cartUpdate)}
+                {showRemoveButton(ShowRemoveProductButton)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
     </div>
   );
 };

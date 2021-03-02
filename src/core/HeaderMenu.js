@@ -11,7 +11,8 @@ const LayoutWithRoute = ({ children}) => {
   return (
     <>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }}>
+        <Header className="site-layout-background" style={{ position: 'fixed' , top: 0 , width: '100%' , marginTop: 0 }}>
+          รายการ
             <Link to="/cart" style={{float:'right' , marginRight:10 }}>
               list{" "}
               <sup>

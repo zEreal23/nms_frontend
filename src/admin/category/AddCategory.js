@@ -55,7 +55,7 @@ const AddCategory = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-        return <Redirect to="/admin/product"/>;
+        return <Redirect to="/manage/product"/>;
     }
   };
 

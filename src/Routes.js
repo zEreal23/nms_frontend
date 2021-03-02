@@ -7,15 +7,16 @@ import Menu from "./core/Menu";
 import Cart from "./core/Cart";
 
 import AdminPage from "./admin/AdminPage";
-import adminCategoryAndMenu from "./admin/adminCategoryandMenu";
-import AddCategort from "../src/admin/category/AddCategory";
+import ManageCategory from './admin/category/ManageCategory';
+import AddCategory from "../src/admin/category/AddCategory";
 import UpdateCategory from "../src/admin/category/UpdateCategory";
 
-import AddProduct from "../src/admin/Menu/AddProduct";
-import UpdateProduct from "../src/admin/Menu/UpdateProduct";
+import AddMenu from "../src/admin/Menu/AddProduct";
+import ManageMenu from './admin/Menu/ManageProduct'
+import UpdateMenu from "../src/admin/Menu/UpdateProduct";
 
 
-import ManageUsers from "./admin/user/ManageUser.";
+import ManageUsers from "./admin/user/ManageUser";
 import UpdateUser from "./admin/user/UpdateUser";
 
 import ManageTable from './admin/table/ManageTable'
@@ -30,42 +31,51 @@ function Routes() {
     <BrowserRouter>
       <Switch>
         <Route path="/signin" exact component={Signin} />
-        <AdminRoute path="/admin/home" exact component={AdminPage} />
-        <AdminRoute path="/users" exact component={ManageUsers} />
-        <AdminRoute path="/create/category" exact component={AddCategort} />
-        <AdminRoute path="/create/product" exact component={AddProduct} />
+        <AdminRoute path="/admin" exact component={AdminPage} />
+
+        <AdminRoute path="/Manage/users" exact component={ManageUsers} />
         <AdminRoute
-          path="/admin/product"
-          exact
-          component={adminCategoryAndMenu}
-        />
-        <AdminRoute
-          path="/admin/product/update/:productId"
-          exact
-          component={UpdateProduct}
-        />
-        <AdminRoute
-          path="/admin/category/update/:categoryId"
-          exact
-          component={UpdateCategory}
-        />
-        <AdminRoute
-          path="/admin/user/update/:userId"
+          path="/Manage/user/update/:userId"
           exact
           component={UpdateUser}
         />
+        
+        <AdminRoute path="/create/product" exact component={AddMenu} />
         <AdminRoute
-          path="/admin/table"
+          path="/Manage/menu"
+          exact
+          component={ManageMenu}
+        />
+        <AdminRoute
+          path="/Manage/product/update/:productId"
+          exact
+          component={UpdateMenu}
+        />
+
+        <AdminRoute path="/create/category" exact component={AddCategory} />
+        <AdminRoute
+          path="/Manage/category"
+          exact
+          component={ManageCategory}
+        />
+        <AdminRoute
+          path="/Manage/category/update/:categoryId"
+          exact
+          component={UpdateCategory}
+        />
+      
+        <AdminRoute
+          path="/Manage/table"
           exact
           component={ManageTable}
         />
         <AdminRoute
-          path="/admin/table/update/:tableId"
+          path="/Manage/table/update/:tableId"
           exact
           component={UpdateTable}
         />
         <CartRoute path="/cart" exact component={Cart} />
-        <MenuRoute path="/Menu" exact component={Menu} />
+        <MenuRoute path="/Menu/:tableId" exact component={Menu} />
       </Switch>
     </BrowserRouter>
   );

@@ -36,7 +36,7 @@ const AddTable = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-        return <Redirect to="/admin/table"/>;
+        return <Redirect to="/manage/table"/>;
     }
   };
 

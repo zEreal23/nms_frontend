@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Drawer, Card, Table } from "antd";
 
-import { Link } from "react-router-dom";
+import { getUsers, deleteUser } from "../apiAdmin";
+import Staff from "../../image/user.png";
+import CreateUsers from "../../user/signup";
 
 import { isAuthenticated } from "../../auth";
-import { getCategories, deleteCategory } from "../apiAdmin";
-import "../Menu/ManageStyle.css";
-import AddCategory from "./AddCategory";
 
-const ManageCategory = () => {
-  const [categories, setCategories] = useState([]);
-
-  const { user, token } = isAuthenticated();
-
+const ManageUser = () => {
+  const [users, setUsers] = useState([]);
   const [visible, setVisible] = useState(false);
 
   const showDrawer = () => {
+    console.log(visible);
     setVisible(true);
   };
 
@@ -23,25 +21,37 @@ const ManageCategory = () => {
     setVisible(false);
   };
 
-  const loadCategories = () => {
-    getCategories().then((data) => {
+  const destroy = (userId) => {
+    const { token } = isAuthenticated();
+    deleteUser(userId, token).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        setCategories(data);
+        loadUsers();
       }
     });
   };
 
-  const delCategory = (categoryId) => {
-    deleteCategory(categoryId, user._id, token).then((data) => {
+  const delConfirmed = (userId) => {
+    let answer = window.confirm("Are you sure want to delete?", userId);
+    if (answer) {
+      destroy(userId);
+    }
+  };
+
+  const loadUsers = () => {
+    getUsers().then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        loadCategories();
+        setUsers(data);
       }
     });
   };
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
   const columns = [
     {
@@ -55,6 +65,11 @@ const ManageCategory = () => {
       width: 150,
     },
     {
+      title: "role",
+      dataIndex: "role",
+      width: 150,
+    },
+    {
       title: "manage",
       dataIndex: "manage",
       width: 150,
@@ -63,14 +78,15 @@ const ManageCategory = () => {
 
   const tableData = [];
   {
-    categories.map((data, index) => {
+    users.map((data, index) => {
       tableData.push({
         key: index,
         id: `${data._id}`,
         name: `${data.name}`,
+        role: `${data.role}`,
         manage: (
           <>
-            <Link to={`/Manage/category/update/${data._id}`}>
+            <Link to={`/Manage/user/update/${data._id}`}>
               <span
                 type="button"
                 className="btn btn-primary"
@@ -80,7 +96,7 @@ const ManageCategory = () => {
               </span>
             </Link>
             <button
-              onClick={() => delCategory(data._id)}
+              onClick={() => delConfirmed(data._id)}
               type="button"
               className="btn btn-danger"
             >
@@ -92,14 +108,10 @@ const ManageCategory = () => {
     });
   }
 
-  useEffect(() => {
-    loadCategories();
-  }, []);
-
   return (
     <div>
       <Drawer
-        title="Category"
+        title="Staff"
         placement="right"
         closeable={false}
         onClose={onClose}
@@ -108,11 +120,11 @@ const ManageCategory = () => {
         store={{ position: "absolute" }}
       >
         <div>
-          <AddCategory />
+          <CreateUsers />
         </div>
       </Drawer>
       <Card
-        title={`Total ${categories.length} Categories`}
+        title={`Total ${users.length} Staff`}
         extra={
           <div style={{ margin: 10 }}>
             <span
@@ -121,7 +133,7 @@ const ManageCategory = () => {
               style={{ marginLeft: 10 }}
               onClick={showDrawer}
             >
-              Add Category
+              Add Staff
             </span>
           </div>
         }
@@ -138,4 +150,4 @@ const ManageCategory = () => {
   );
 };
 
-export default ManageCategory;
+export default ManageUser;

@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 
 import MenuinSidebar from "../component/Layout/MenuinSidebar";
+import BreadCrumb from '../component/Layout/BreadCrumb'
 import logo from "../image/LOGONMD.png";
 import "./index.css";
 import { signout, isAuthenticated } from "../auth";
@@ -25,13 +26,13 @@ const LayoutWithRoute = ({ children, history }) => {
 
   const dropdownMenu = () => (
     <Menu>
-      <Menu.Item key="/admin/home">
-        <Link to="/admin/home" />
+      <Menu.Item key="/admin">
+        <Link to="/admin" />
         Home
       </Menu.Item>
 
-      <Menu.Item key="/admin/home">
-        <Link to="/admin/home" />
+      <Menu.Item key="/admin">
+        <Link to="/admin" />
         Profile
       </Menu.Item>
 
@@ -80,14 +81,12 @@ const LayoutWithRoute = ({ children, history }) => {
             </Dropdown>
           </Header>
 
-          <Content style={{ height:'100%'}}>
-            <Breadcrumb style={{ margin: "10px 16px" }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb>
+          <Content>
+            <div style={{ margin: "10px 16px" }}>
+              <BreadCrumb/>
+            </div>
             <div
-              className="site-layout-background"
+             
               style={{
                 margin: "10px",
                 padding: 1,
@@ -97,7 +96,7 @@ const LayoutWithRoute = ({ children, history }) => {
               {children}
             </div>
           </Content>
-          <Footer style={{ textAlign: "center" , button: 0 }}>
+          <Footer style={{ textAlign: "center" , button: 0  }}>
             Namodin ©2021 Created by zEreal23
           </Footer>
         </Layout>

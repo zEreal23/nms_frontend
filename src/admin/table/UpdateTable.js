@@ -66,7 +66,7 @@ const UpdateTable = ({ match }) => {
         Update Table
       </button>
 
-      <Link to={"/admin/product"}>
+      <Link to={"/manage/product"}>
         <span
           type="button"
           className="btn btn-outline-warning"

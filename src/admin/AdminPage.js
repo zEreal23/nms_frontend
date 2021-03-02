@@ -1,14 +1,17 @@
 import React from "react";
-import { Card,} from "antd";
+import { Card, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 
 import MenuFood from "../image/Menu.png";
 import Promotion from "../image/tag.png";
 import Table from "../image/chair.png";
 import Report from "../image/dashboard.png";
-import Staff from "../image/user.png"; 
+import Staff from "../image/user.png";
 import Guide from "../image/guide.png";
 
+import MangeCetagories from "./category/ManageCategory";
+import ManageStaff from "./user/ManageUser";
+import ManageMenu from "./Menu/ManageProduct";
 
 const AdminPage = () => {
   const Rowler = {
@@ -91,7 +94,32 @@ const AdminPage = () => {
 
   return (
     <div>
-      <Allmenu />
+      <Row>
+        <Col>
+          <Card style={{ borderRadius: 10, width: "auto" , margin:10}}>
+            <h5>ยอดขายรายวัน</h5>
+            <p>0</p>
+          </Card>
+        </Col>
+
+        <Col>
+          <Card style={{ borderRadius: 10, width: "auto", margin:10  }}>
+            <h5>ยอดขายรายเดือน</h5>
+            <p>0</p>
+          </Card>
+        </Col>
+
+        <Col>
+          <Card style={{ borderRadius: 10, width: "auto", margin:10  }}>
+            <h5>ยอดขายรายปี</h5>
+            <p>0</p>
+          </Card>
+        </Col>
+      </Row>
+
+      <MangeCetagories />
+      <ManageMenu />
+      <ManageStaff />
     </div>
   );
 };

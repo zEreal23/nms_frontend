@@ -16,7 +16,6 @@ const Cart = () => {
     return (
       <div>
         <h2>Order {`${items.length}`} items</h2>
-        <hr />
         {items.map((product, i) => (
           <CardMenu
             key={i}

@@ -10,6 +10,13 @@ import AddTable from './AddTable';
 
 const ManageTable = () => {
   const [tables, setTable] = useState([]);
+  const [value , setValue] = useState({
+    totalTables:0,
+    pageCount:1,
+    perPage:5,
+    currentPageData:[],
+    offset:0
+  })
 
   const { user, token } = isAuthenticated();
 
@@ -29,10 +36,45 @@ const ManageTable = () => {
       if (data.error) {
         console.log(data.error);
       } else {
-        setTable(data);
+        setTable(data)
+        setValue({
+            totalTables: data.length
+        }, () => {
+            setPaginationStates();
+        })
+        
       }
     });
   };
+
+  const setPaginationStates = () => {
+      const {totalTables , perPage} = value;
+      setValue({
+          pageCount: Math.ceil(totalTables / perPage)
+      }, () =>{
+          setForCurrentPage();
+      })
+  }
+
+  const setForCurrentPage = () => {
+      const {offset , perPage} = value;
+      const currentPage = tables.slice(offset, offset + perPage);
+      setValue({
+          currentPageData: currentPage,
+      })
+   }
+
+   const handlePageClick = (pageNumber) => {
+    const {perPage} = value;
+    const currentPage = pageNumber - 1;
+    const offset = currentPage * perPage;
+    setValue({
+        offset: offset
+    }, ()=>{
+        setForCurrentPage();
+    })
+
+}
 
   const delTable = (categoryId) => {
     deleteTable(categoryId, user._id, token).then((data) => {
@@ -44,6 +86,7 @@ const ManageTable = () => {
     });
   };
 
+  const {totalTables , pageCount , perPage} = value
   const Demo = () => (
     <div
       style={{
@@ -86,6 +129,7 @@ const ManageTable = () => {
       <table className="table text-center row-8">
         <thead className="thead-dark">
           <tr>
+            <th scope="col">Id</th>
             <th scope="col">Name</th>
             <th scope="col">Manage</th>
           </tr>
@@ -93,8 +137,19 @@ const ManageTable = () => {
         {tables.map((data, index) => (
           <tbody>
             <tr key={index}>
+              <td>{data._id}</td>
               <td>{data.noTable}</td>
               <td>
+              <Link to={`/menu/${data._id}`}>
+                  <span
+                    type="button"
+                    className="btn btn-success"
+                    style={{ marginRight: 10 }}
+                  >
+                    Menu
+                  </span>
+                </Link>
+
                 <Link to={`/admin/table/update/${data._id}`}>
                   <span
                     type="button"
@@ -118,7 +173,15 @@ const ManageTable = () => {
         ))}
       </table>
       </Card>
-      <Pagination defaultCurrent={1} pageSize={5} total={tables.length} />
+      { pageCount > 1 &&
+        <Pagination 
+            defaultCurrent={1} 
+            onChange={handlePageClick} 
+            pageSize={perPage} 
+            total={totalTables} 
+            showTotal={(total, range) => `${range[0]}-${range[1]} of ${total}`} 
+            />
+    }
     </div>
   );
 

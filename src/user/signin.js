@@ -121,7 +121,7 @@ const Signin = () => {
   const redirectUser = () => {
     if (redirectToReferrer) {
       if (user && user.role === 1) {
-        return <Redirect to="/admin/home" />;
+        return <Redirect to="/admin" />;
       } else {
         return <Redirect to="/" />;
       }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Drawer, Card, Table } from "antd";
 
 import { isAuthenticated } from "../../auth";
 import { getProducts, deleteProduct } from "../apiAdmin";
@@ -30,6 +31,67 @@ const ManageProduct = () => {
       }
     });
   };
+
+  const columns = [
+    {
+      title: "id",
+      dataIndex: "id",
+      width: 150,
+    },
+    {
+      title: "category",
+      dataIndex: "category",
+      width: 150,
+    },
+    {
+      title: "name",
+      dataIndex: "name",
+      width: 150,
+    },
+    {
+      title: "price",
+      dataIndex: "price",
+      width: 150,
+    },
+    {
+      title: "manage",
+      dataIndex: "manage",
+      width: 150,
+    },
+  ];
+
+  const tableData = [];
+  {
+    products.map((data, index) => {
+      tableData.push({
+        key: index,
+        id: `${data._id}`,
+        category: `${data.category.name}`,
+        name: `${data.name}`,
+        price: `${data.price}`,
+        manage: (
+          <>
+            <Link to={`/Manage/menu/update/${data._id}`}>
+              <span
+                type="button"
+                className="btn btn-primary"
+                style={{ marginRight: 10 }}
+              >
+                Edit
+              </span>
+            </Link>
+            <button
+              onClick={() => destroy(data._id)}
+              type="button"
+              className="btn btn-danger"
+            >
+              Delete
+            </button>
+          </>
+        ),
+      });
+    });
+  }
 
   const Demo = () => (
     <div
@@ -110,7 +172,29 @@ const ManageProduct = () => {
 
   return (
     <div>
-      <Demo />
+      <Card title={`Total ${products.length} Menu`} 
+      extra={
+        <div style={{ margin: 10 }}>
+          <Link to="/create/product">
+          <span
+            type="button"
+            className="btn btn-outline-success"
+            style={{ marginLeft: 10 }}
+            
+          >
+            Add Menu
+          </span>
+          </Link>
+        </div>
+      }
+      style={{ borderColor: "#eee", borderRadius: 30, margin: 10}}>
+        <Table
+          columns={columns}
+          dataSource={tableData}
+          pagination={{ pageSize: 5 }}
+          style={{ margin: 5 }}
+        />
+      </Card>
     </div>
   );
 };
