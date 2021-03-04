@@ -39,7 +39,7 @@ const Home = ({ match }) => {
 
   return (
     <div className="container" style={{ marginTop: 20 }}>
-      <h1>No. {noTable}</h1>
+      <h1>Table No. {noTable}</h1>
       <img className="d-block w-100" src={MK} alt="First slide" />
       <h2 className="mb-4" style={{ textAlign: "center", margin: 10 }}>
         Menu
@@ -60,8 +60,8 @@ const Home = ({ match }) => {
           <Link to= {`/cart/${match.params.tableId}`} >
             <span
               type="button"
-              className="btn btn-outline-success"
-              style={{width:'100%' }}
+              className="btn btn-success"
+              style={{width:'auto' }}
             >
                Your Order{" "}
             <sup>

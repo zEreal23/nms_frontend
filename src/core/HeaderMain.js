@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Layout, Menu, Button, Dropdown, Breadcrumb } from "antd";
-import { Link, useLocation, withRouter } from "react-router-dom";
+import { Layout, Menu, Button, Dropdown,  } from "antd";
+import { Link, withRouter } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  HomeOutlined,
   DownOutlined,
+  NotificationOutlined
 } from "@ant-design/icons";
 
 import MenuinSidebar from "../component/Layout/MenuinSidebar";
@@ -15,10 +15,10 @@ import "./index.css";
 import { signout, isAuthenticated } from "../auth";
 
 const { Header, Sider, Content, Footer } = Layout;
+const { SubMenu } = Menu;
 
 const LayoutWithRoute = ({ children, history }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const location = useLocation();
 
   const ToggleButton = () => {
     setCollapsed(!collapsed);
@@ -35,6 +35,29 @@ const LayoutWithRoute = ({ children, history }) => {
         <Link to="/admin" />
         Profile
       </Menu.Item>
+
+      <SubMenu title="Manage">
+      <Menu.Item key="1">
+          <Link to="/Manage/category">Category</Link>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <Link to="/Manage/Menu">Menu</Link>
+        </Menu.Item>
+
+        <Menu.Item key="3">
+          <Link to="/Manage/table">Table</Link>
+        </Menu.Item>
+
+        <Menu.Item key="4"> 
+          <Link to="/">Order</Link>
+        </Menu.Item>
+
+        <Menu.Item key="5">
+          <Link to="/Manage/users">Staff</Link>
+        </Menu.Item>
+
+        <Menu.Item key="6">Promotion</Menu.Item>
+      </SubMenu>
 
       <Menu.Item
         onClick={() =>
@@ -58,7 +81,7 @@ const LayoutWithRoute = ({ children, history }) => {
           className="site-layout-background"
         >
           <div className="logo">
-            <img src={logo} style={{ height: 40, width: "auto" }} />
+            <img src={logo} alt="logo" style={{ height: 40, width: "auto" }} />
           </div>
           <MenuinSidebar />
         </Sider>
@@ -73,30 +96,24 @@ const LayoutWithRoute = ({ children, history }) => {
               }
             )}
 
+
+
             <Dropdown overlay={dropdownMenu}>
               <Button style={{ margin: 15, float: "right", borderRadius: 25 }}>
                 {`${isAuthenticated().user.name}`}
                 <DownOutlined />
               </Button>
             </Dropdown>
+            <NotificationOutlined style={{ margin: 20, float: 'right', fontSize: 20 }} />
           </Header>
 
-          <Content>
+          <Content style={{ margin: 5 }}>
             <div style={{ margin: "10px 16px" }}>
-              <BreadCrumb/>
+              <BreadCrumb />
             </div>
-            <div
-             
-              style={{
-                margin: "10px",
-                padding: 1,
-                height: "100%",
-              }}
-            >
-              {children}
-            </div>
+            {children}
           </Content>
-          <Footer style={{ textAlign: "center" , button: 0  }}>
+          <Footer style={{ textAlign: "center", button: 0 }}>
             Namodin ©2021 Created by zEreal23
           </Footer>
         </Layout>

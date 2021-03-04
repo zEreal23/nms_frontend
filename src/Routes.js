@@ -8,7 +8,6 @@ import Cart from "./core/Cart";
 
 import AdminPage from "./admin/AdminPage";
 import ManageCategory from './admin/category/ManageCategory';
-import AddCategory from "../src/admin/category/AddCategory";
 import UpdateCategory from "../src/admin/category/UpdateCategory";
 
 import AddMenu from "../src/admin/Menu/AddProduct";
@@ -30,7 +29,7 @@ function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/signin" exact component={Signin} />
+        <Route path="/" exact component={Signin} />
         <AdminRoute path="/admin" exact component={AdminPage} />
 
         <AdminRoute path="/Manage/users" exact component={ManageUsers} />
@@ -40,7 +39,10 @@ function Routes() {
           component={UpdateUser}
         />
         
-        <AdminRoute path="/create/product" exact component={AddMenu} />
+        <AdminRoute 
+          path="/create/product" 
+          exact 
+          component={AddMenu} />
         <AdminRoute
           path="/Manage/menu"
           exact
@@ -52,7 +54,7 @@ function Routes() {
           component={UpdateMenu}
         />
 
-        <AdminRoute path="/create/category" exact component={AddCategory} />
+        
         <AdminRoute
           path="/Manage/category"
           exact

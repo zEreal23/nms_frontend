@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Drawer, Card, Table } from "antd";
-
 import { Link } from "react-router-dom";
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import { isAuthenticated } from "../../auth";
-import { getCategories, deleteCategory } from "../apiAdmin";
+import { getCategories, deleteCategory, createCategory } from "../apiAdmin";
 import "../Menu/ManageStyle.css";
-import AddCategory from "./AddCategory";
 
 const ManageCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -75,16 +74,18 @@ const ManageCategory = () => {
                 type="button"
                 className="btn btn-primary"
                 style={{ marginRight: 10 }}
+
               >
-                Edit
+                <EditOutlined />
               </span>
             </Link>
+
             <button
               onClick={() => delCategory(data._id)}
               type="button"
               className="btn btn-danger"
             >
-              Delete
+              <DeleteOutlined />
             </button>
           </>
         ),
@@ -95,6 +96,80 @@ const ManageCategory = () => {
   useEffect(() => {
     loadCategories();
   }, []);
+
+  const [name, setName] = useState("");
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleChange = (e) => {
+    setError("");
+    setName(e.target.value);
+  };
+
+  const clickSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess(false);
+    // make request to api to create category
+    createCategory(user._id, token, { name }).then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setError("");
+        setSuccess(true);
+        loadCategories();
+      }
+    });
+  };
+
+  const showSuccess = () => {
+    if (success) {
+      return <h3 className="text-success">Created done</h3>;
+    }
+  };
+
+  const showError = () => {
+    if (error) {
+      return (
+        <div
+          className="alert alert-danger"
+          style={{ display: error ? "" : "none" }}
+        >
+          {error}
+        </div>
+      );
+    }
+  };
+
+
+  const newCategoryFom = () => (
+    <form onSubmit={clickSubmit}>
+      <div className="form-group">
+        <label className="text-muted">Name</label>
+        <input
+          type="text"
+          className="form-control"
+          onChange={handleChange}
+          value={name}
+          autoFocus
+          required
+        />
+      </div>
+      <button className="btn btn-outline-primary">Create Category</button>
+    </form>
+  )
+
+  const AddCategory = () => (
+    <div className="row">
+      <div className="col-md-8 offset-md-2">
+        {showSuccess()}
+        {showError()}
+        {newCategoryFom()}
+
+      </div>
+    </div>
+  )
+
 
   return (
     <div>
@@ -111,6 +186,7 @@ const ManageCategory = () => {
           <AddCategory />
         </div>
       </Drawer>
+
       <Card
         title={`Total ${categories.length} Categories`}
         extra={
@@ -118,21 +194,23 @@ const ManageCategory = () => {
             <span
               type="button"
               className="btn btn-outline-success"
-              style={{ marginLeft: 10 }}
+
               onClick={showDrawer}
             >
               Add Category
             </span>
           </div>
         }
-        style={{ borderColor: "#eee", borderRadius: 30, margin: 10 }}
+        style={{ borderColor: "#eee", borderRadius: 30 }}
       >
-        <Table
-          columns={columns}
-          dataSource={tableData}
-          pagination={{ pageSize: 5 }}
-          style={{ margin: 5 }}
-        />
+        <div style={{ width: 'auto' }}>
+          <Table
+            columns={columns}
+            dataSource={tableData}
+            pagination={{ pageSize: 5 }}
+            style={{ margin: 5 }}
+          />
+        </div>
       </Card>
     </div>
   );

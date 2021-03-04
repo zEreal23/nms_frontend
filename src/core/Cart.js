@@ -39,7 +39,7 @@ const Cart = ({match}) => {
     <h2>
       Your don't have any Food order
       <br />
-      <Link to="/Menu"></Link>{" "}
+      <Link to={`/Menu/${Table._id}`}></Link>{" "}
     </h2>
   );
   

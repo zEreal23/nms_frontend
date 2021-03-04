@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Drawer, Card, Table } from "antd";
+import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 
 import { getUsers, deleteUser } from "../apiAdmin";
 import Staff from "../../image/user.png";
@@ -92,7 +93,7 @@ const ManageUser = () => {
                 className="btn btn-primary"
                 style={{ marginRight: 10 }}
               >
-                Edit
+                <EditOutlined />
               </span>
             </Link>
             <button
@@ -100,7 +101,7 @@ const ManageUser = () => {
               type="button"
               className="btn btn-danger"
             >
-              Delete
+              <DeleteOutlined />
             </button>
           </>
         ),
@@ -137,7 +138,7 @@ const ManageUser = () => {
             </span>
           </div>
         }
-        style={{ borderColor: "#eee", borderRadius: 30, margin: 10 }}
+        style={{ borderColor: "#eee", borderRadius: 30, marginTop: 5 }}
       >
         <Table
           columns={columns}

@@ -3,13 +3,6 @@ import { Menu } from "antd";
 import { Link, useLocation, withRouter } from "react-router-dom";
 import { HomeOutlined, FormOutlined, LogoutOutlined } from "@ant-design/icons";
 
-import MenuFood from "../../image/Menu.png";
-import Promotion from "../../image/tag.png";
-import Table from "../../image/chair.png";
-import Report from "../../image/dashboard.png";
-import Staff from "../../image/user.png";
-import Guide from "../../image/guide.png";
-
 import { signout } from "../../auth";
 
 const MenuinSidebar = ({ history }) => {
@@ -31,6 +24,10 @@ const MenuinSidebar = ({ history }) => {
 
         <Menu.Item key="3">
           <Link to="/Manage/table">Table</Link>
+        </Menu.Item>
+
+        <Menu.Item key="3">
+          <Link to="/Manage/users">Order</Link>
         </Menu.Item>
 
         <Menu.Item key="4">
