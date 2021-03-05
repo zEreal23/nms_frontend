@@ -16,7 +16,7 @@ const UpdateTable = ({ match }) => {
       if (data.error) {
         setError(data.error);
       } else {
-        setNotable(data.noTable);
+        setNotable(data.name);
       }
     });
   };

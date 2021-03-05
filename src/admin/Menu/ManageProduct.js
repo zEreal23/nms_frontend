@@ -18,6 +18,7 @@ const ManageProduct = () => {
         console.log(data.error);
       } else {
         setProducts(data);
+        console.log(data)
         //console.log(data[0].category.name);
       }
     });

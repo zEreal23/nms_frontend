@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Layout, Menu, Button, Dropdown,  } from "antd";
+import { Layout, Menu, Button, Dropdown } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   DownOutlined,
-  NotificationOutlined
+  NotificationOutlined,
 } from "@ant-design/icons";
 
 import MenuinSidebar from "../component/Layout/MenuinSidebar";
-import BreadCrumb from '../component/Layout/BreadCrumb'
+import BreadCrumb from "../component/Layout/BreadCrumb";
 import logo from "../image/LOGONMD.png";
 import "./index.css";
 import { signout, isAuthenticated } from "../auth";
@@ -37,7 +37,7 @@ const LayoutWithRoute = ({ children, history }) => {
       </Menu.Item>
 
       <SubMenu title="Manage">
-      <Menu.Item key="1">
+        <Menu.Item key="1">
           <Link to="/Manage/category">Category</Link>
         </Menu.Item>
         <Menu.Item key="2">
@@ -48,15 +48,11 @@ const LayoutWithRoute = ({ children, history }) => {
           <Link to="/Manage/table">Table</Link>
         </Menu.Item>
 
-        <Menu.Item key="4"> 
-          <Link to="/">Order</Link>
-        </Menu.Item>
-
-        <Menu.Item key="5">
+        <Menu.Item key="4">
           <Link to="/Manage/users">Staff</Link>
         </Menu.Item>
 
-        <Menu.Item key="6">Promotion</Menu.Item>
+        <Menu.Item key="5">Promotion</Menu.Item>
       </SubMenu>
 
       <Menu.Item
@@ -96,15 +92,15 @@ const LayoutWithRoute = ({ children, history }) => {
               }
             )}
 
-
-
             <Dropdown overlay={dropdownMenu}>
               <Button style={{ margin: 15, float: "right", borderRadius: 25 }}>
                 {`${isAuthenticated().user.name}`}
                 <DownOutlined />
               </Button>
             </Dropdown>
-            <NotificationOutlined style={{ margin: 20, float: 'right', fontSize: 20 }} />
+            <NotificationOutlined
+              style={{ margin: 20, float: "right", fontSize: 20 }}
+            />
           </Header>
 
           <Content style={{ margin: 5 }}>

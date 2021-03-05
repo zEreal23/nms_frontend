@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Drawer,Pagination , Card } from "antd";
-
+import { Drawer , Card } from "antd";
+import QRCode from 'qrcode.react'
 import { Link } from "react-router-dom";
 
 import { isAuthenticated } from "../../auth";
@@ -10,13 +10,6 @@ import AddTable from './AddTable';
 
 const ManageTable = () => {
   const [tables, setTable] = useState([]);
-  const [value , setValue] = useState({
-    totalTables:0,
-    pageCount:1,
-    perPage:5,
-    currentPageData:[],
-    offset:0
-  })
 
   const { user, token } = isAuthenticated();
 
@@ -36,48 +29,13 @@ const ManageTable = () => {
       if (data.error) {
         console.log(data.error);
       } else {
-        setTable(data)
-        setValue({
-            totalTables: data.length
-        }, () => {
-            setPaginationStates();
-        })
-        
+        setTable(data) 
       }
     });
   };
 
-  const setPaginationStates = () => {
-      const {totalTables , perPage} = value;
-      setValue({
-          pageCount: Math.ceil(totalTables / perPage)
-      }, () =>{
-          setForCurrentPage();
-      })
-  }
-
-  const setForCurrentPage = () => {
-      const {offset , perPage} = value;
-      const currentPage = tables.slice(offset, offset + perPage);
-      setValue({
-          currentPageData: currentPage,
-      })
-   }
-
-   const handlePageClick = (pageNumber) => {
-    const {perPage} = value;
-    const currentPage = pageNumber - 1;
-    const offset = currentPage * perPage;
-    setValue({
-        offset: offset
-    }, ()=>{
-        setForCurrentPage();
-    })
-
-}
-
-  const delTable = (categoryId) => {
-    deleteTable(categoryId, user._id, token).then((data) => {
+  const delTable = (tableId) => {
+    deleteTable(tableId, user._id, token).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
@@ -86,7 +44,6 @@ const ManageTable = () => {
     });
   };
 
-  const {totalTables , pageCount , perPage} = value
   const Demo = () => (
     <div
       style={{
@@ -112,7 +69,7 @@ const ManageTable = () => {
       </div>
 
       <Drawer
-        title="Category"
+        title="Table"
         placement="right"
         closeable={false}
         onClose={onClose}
@@ -131,6 +88,7 @@ const ManageTable = () => {
           <tr>
             <th scope="col">Id</th>
             <th scope="col">Name</th>
+            <th scope="col">Qrcode</th>
             <th scope="col">Manage</th>
           </tr>
         </thead>
@@ -138,7 +96,8 @@ const ManageTable = () => {
           <tbody>
             <tr key={index}>
               <td>{data._id}</td>
-              <td>{data.noTable}</td>
+              <td>{data.name}</td>
+              <td> <QRCode value="b"/></td>
               <td>
               <Link to={`/menu/${data._id}`}>
                   <span
@@ -150,7 +109,7 @@ const ManageTable = () => {
                   </span>
                 </Link>
 
-                <Link to={`/admin/table/update/${data._id}`}>
+                <Link to={`/manage/table/update/${data._id}`}>
                   <span
                     type="button"
                     className="btn btn-primary"
@@ -173,15 +132,6 @@ const ManageTable = () => {
         ))}
       </table>
       </Card>
-      { pageCount > 1 &&
-        <Pagination 
-            defaultCurrent={1} 
-            onChange={handlePageClick} 
-            pageSize={perPage} 
-            total={totalTables} 
-            showTotal={(total, range) => `${range[0]}-${range[1]} of ${total}`} 
-            />
-    }
     </div>
   );
 

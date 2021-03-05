@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 
 import { isAuthenticated } from "../../auth";
-import {  getAllTable , createTable } from "../apiAdmin";
+import { createTable } from "../apiAdmin";
 
 const AddTable = () => {
-  const [noTable, setNoTable] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [redirectToReferrer, setredirectToReferrer] = useState(false);
@@ -15,7 +15,8 @@ const AddTable = () => {
 
   const handleChange = (e) => {
     setError("");
-    setNoTable(e.target.value);
+    setSuccess(false);
+    setName(e.target.value);
   };
 
   const clickSubmit = (e) => {
@@ -23,7 +24,7 @@ const AddTable = () => {
     setError("");
     setSuccess(false);
     // make request to api to create category
-    createTable(user._id, token, { noTable }).then((data) => {
+    createTable(user._id, token, { name }).then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
@@ -67,7 +68,7 @@ const AddTable = () => {
           type="text"
           className="form-control"
           onChange={handleChange}
-          value={noTable}
+          value={name}
           autoFocus
           required
         />

@@ -14,7 +14,6 @@ import AddMenu from "../src/admin/Menu/AddProduct";
 import ManageMenu from './admin/Menu/ManageProduct'
 import UpdateMenu from "../src/admin/Menu/UpdateProduct";
 
-
 import ManageUsers from "./admin/user/ManageUser";
 import UpdateUser from "./admin/user/UpdateUser";
 

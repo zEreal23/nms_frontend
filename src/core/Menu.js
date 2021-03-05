@@ -27,7 +27,7 @@ const Home = ({ match }) => {
       if (data.error) {
         setError(data.error);
       } else {
-        setNotable(data.noTable);
+        setNotable(data.name);
       }
     });
   };
@@ -38,39 +38,32 @@ const Home = ({ match }) => {
   }, []);
 
   return (
-    <div className="container" style={{ marginTop: 20 }}>
+    <div style={{ marginTop: 20 }}>
       <h1>Table No. {noTable}</h1>
-      <img className="d-block w-100" src={MK} alt="First slide" />
+      <img className="d-block" style={{width:'100%'}} src={MK} alt="First slide" />
       <h2 className="mb-4" style={{ textAlign: "center", margin: 10 }}>
         Menu
       </h2>
-
-      <div
-        className="row"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <button type="button" className="btn btn-outline-secondary">Secondary</button>
+      <button type="button" className="btn btn-outline-secondary">Secondary</button>
+      <div>
         {productsByArrial.map((product, i) => (
           <CardMenu key={i} product={product} />
         ))}
-        <div style={{ bottom: 10, position: "fixed" }}>
+      </div>
           <Link to= {`/cart/${match.params.tableId}`} >
-            <span
+            <button
               type="button"
-              className="btn btn-success"
-              style={{width:'auto' }}
+              className="btn btn-primary btn-lg btn-block"
+              style={{ bottom: 10, position:'fixed' , right:0 , left:0}}
             >
                Your Order{" "}
             <sup>
               <small className="cart-badge">{itemTotal()}</small>
             </sup>
-            </span>
+            </button>
           </Link>
-        </div>
-      </div>
+    
     </div>
   );
 };

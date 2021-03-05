@@ -281,7 +281,7 @@ export const getTable = (tableId) => {
 };
 
 export const getAllTable = () => {
-  return fetch(`${API}/table`, {
+  return fetch(`${API}/alltable`, {
     method: "GET",
   })
     .then((response) => {
@@ -290,7 +290,7 @@ export const getAllTable = () => {
     .catch((err) => console.log(err));
 };
 
-export const createTable = (userId, token, table) => {
+export const createTable = (userId, token, t) => {
   return fetch(`${API}/table/create/${userId}`, {
     method: "POST",
     headers: {
@@ -298,7 +298,7 @@ export const createTable = (userId, token, table) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(table),
+    body: JSON.stringify(t),
   })
     .then((response) => {
       return response.json();
