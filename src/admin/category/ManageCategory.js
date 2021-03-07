@@ -188,6 +188,7 @@ const ManageCategory = () => {
       </Drawer>
 
       <Card
+      hoverable
         title={`Total ${categories.length} Categories`}
         extra={
           <div style={{ margin: 10 }}>

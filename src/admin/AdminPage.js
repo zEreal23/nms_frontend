@@ -31,24 +31,24 @@ const AdminPage = () => {
   );
 
   return (
-    <div>
+    <div className="container">
       <Row>
         <Col>
-          <Card style={card}>
+          <Card style={card} hoverable>
             <h5>Summary of weekly sales</h5>
             <h6>0</h6>
           </Card>
         </Col>
 
         <Col>
-          <Card style={card}>
+          <Card style={card} hoverable>
             <h5>Summary of month sales</h5>
             <h6>0</h6>
           </Card>
         </Col>
 
         <Col>
-          <Card style={card}>
+          <Card style={card} hoverable>
             <h5>Summary of year sales</h5>
             <h6>0</h6>
           </Card>
@@ -56,15 +56,9 @@ const AdminPage = () => {
       </Row>
 
       <Row>
-        <Col>
-          <Card style={card}>
-          <Tab />
-          </Card>
-        </Col>
-      </Row>
-
-      <Row>
           <Col>
+          <MangeCetagories />
+          <ManageMenu />
           <ManageStaff />
           </Col>
         </Row>

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Drawer, Card, Table } from "antd";
-import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { isAuthenticated } from "../../auth";
+import {API} from '../../config' 
 import { getProducts, deleteProduct } from "../apiAdmin";
+import ShowImage from "../../core/ShowImage";
 import "../../admin/Menu/ManageStyle.css";
 
 const ManageProduct = () => {
@@ -18,7 +20,7 @@ const ManageProduct = () => {
         console.log(data.error);
       } else {
         setProducts(data);
-        console.log(data)
+        console.log(data);
         //console.log(data[0].category.name);
       }
     });
@@ -39,6 +41,11 @@ const ManageProduct = () => {
       title: "id",
       dataIndex: "id",
       width: 150,
+    },
+    {
+      title: "photo",
+      dataIndex: "photo",
+      width: '10%',
     },
     {
       title: "category",
@@ -68,6 +75,16 @@ const ManageProduct = () => {
       tableData.push({
         key: index,
         id: `${data._id}`,
+        photo: (
+          <div className="product-img container text-center">
+            <img
+              src={`${API}/product/photo/${data._id}`}
+              alt={data.name}
+              className="mb-3"
+              style={{ height: "50px", width: "auto", borderRadius: "10%" }}
+            />
+          </div>
+        ),
         category: `${data.category.name}`,
         name: `${data.name}`,
         price: `${data.price}`,
@@ -79,7 +96,7 @@ const ManageProduct = () => {
                 className="btn btn-primary"
                 style={{ marginRight: 10 }}
               >
-                   <EditOutlined />
+                <EditOutlined />
               </span>
             </Link>
             <button
@@ -101,27 +118,29 @@ const ManageProduct = () => {
 
   return (
     <div>
-      <Card title={`Total ${products.length} Menu`} 
-      extra={
-        <div style={{ margin: 10 }}>
-          <Link to="/create/product">
-          <span
-            type="button"
-            className="btn btn-outline-success"
-            style={{ marginLeft: 10 }}
-            
-          >
-            Add Menu
-          </span>
-          </Link>
-        </div>
-      }
-      style={{ borderColor: "#eee", borderRadius: 30, marginTop:5}}>
+      <Card
+      hoverable
+        title={`Total ${products.length} Menu`}
+        extra={
+          <div style={{ margin: 10 }}>
+            <Link to="/create/product">
+              <span
+                type="button"
+                className="btn btn-outline-success"
+                style={{ marginLeft: 10 }}
+              >
+                Add Menu
+              </span>
+            </Link>
+          </div>
+        }
+        style={{ borderColor: "#eee", borderRadius: 30, marginTop: 5 }}
+      >
         <Table
           columns={columns}
           dataSource={tableData}
           pagination={{ pageSize: 5 }}
-          style={{ margin: 5 }}
+          style={{ margin: 5}}
         />
       </Card>
     </div>

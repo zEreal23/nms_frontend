@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Drawer , Card } from "antd";
-import QRCode from 'qrcode.react'
+import { Drawer, Card, Table } from "antd";
+import QRCode from "qrcode.react";
 import { Link } from "react-router-dom";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { createTable } from "../apiAdmin";
 
 import { isAuthenticated } from "../../auth";
 import { getAllTable, deleteTable } from "../apiAdmin";
 import "../Menu/ManageStyle.css";
-import AddTable from './AddTable';
 
 const ManageTable = () => {
   const [tables, setTable] = useState([]);
+  const [name, setName] = useState("");
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const { user, token } = isAuthenticated();
 
@@ -29,7 +33,7 @@ const ManageTable = () => {
       if (data.error) {
         console.log(data.error);
       } else {
-        setTable(data) 
+        setTable(data);
       }
     });
   };
@@ -44,30 +48,174 @@ const ManageTable = () => {
     });
   };
 
+  const columns = [
+    {
+      title: "id",
+      dataIndex: "id",
+      width: 150,
+    },
+    {
+      title: "name",
+      dataIndex: "name",
+      width: 150,
+    },
+    {
+      title: "QR code",
+      dataIndex: "QR_code",
+      width: 150,
+    },
+    {
+      title: "manage",
+      dataIndex: "manage",
+      width: 150,
+    },
+  ];
+
+  const tableData = [];
+  {
+    tables.map((data, index) => {
+      tableData.push({
+        key: index,
+        id: `${data._id}`,
+        name: `${data.name}`,
+        QR_code: (<QRCode value={`http://localhost:3000/menu/${data._id}`}/>),
+        manage: (
+          <>
+            <Link to={`/menu/${data._id}`}>
+              <span
+                type="button"
+                className="btn btn-success"
+                style={{ marginRight: 10 }}
+              >
+                Menu
+              </span>
+            </Link>
+            <Link to={`/manage/table/update/${data._id}`}>
+              <span
+                type="button"
+                className="btn btn-primary"
+                style={{ marginRight: 10 }}
+              >
+                <EditOutlined />
+              </span>
+            </Link>
+            <button
+              onClick={() => delTable(data._id)}
+              type="button"
+              className="btn btn-danger"
+            >
+              <DeleteOutlined />
+            </button>
+          </>
+        ),
+      });
+    });
+  }
+
   const Demo = () => (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        margin: 10,
-      }}
-      className=" row d-flex justify-content-center"
-    >
-      <div className="col ">
-        <h2 style={{ marginTop: 10 }}>Total {tables.length} Table</h2>
-      </div>
+    <div>
+      <Card
+        hoverable
+        title={`Total ${tables.length} Table`}
+        extra={
+          <div style={{ margin: 10 }}>
+            <span
+              type="button"
+              className="btn btn-outline-success"
+              onClick={showDrawer}
+            >
+              Add Table
+            </span>
+          </div>
+        }
+        style={{ borderColor: "#eee", borderRadius: 30 }}
+      >
+        <div style={{ width: "auto" }}>
+          <Table
+            columns={columns}
+            dataSource={tableData}
+            pagination={{ pageSize: 5 }}
+            style={{ margin: 5 }}
+          />
+        </div>
+      </Card>
+    </div>
+  );
 
-      <div>
-        <span
-          type="button"
-          className="btn btn-outline-success"
-          onClick={showDrawer}
+  const handleChange = (e) => {
+    setError("");
+    setSuccess(false);
+    setName(e.target.value);
+  };
+
+  const clickSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess(false);
+    // make request to api to create category
+    createTable(user._id, token, { name }).then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setError("");
+        setSuccess(true);
+        loadTable();
+      }
+    });
+  };
+
+  const showSuccess = () => {
+    if (success) {
+      return <h3 className="text-success">Created done</h3>;
+    }
+  };
+
+  const showError = () => {
+    if (error) {
+      return (
+        <div
+          className="alert alert-danger"
+          style={{ display: error ? "" : "none" }}
         >
-          Add Table
-        </span>
-      </div>
+          {error}
+        </div>
+      );
+    }
+  };
 
+  const createTableForm = () => (
+    <form onSubmit={clickSubmit}>
+      <div className="form-group">
+        <label className="text-muted">NO. Table</label>
+        <input
+          type="text"
+          className="form-control"
+          onChange={handleChange}
+          value={name}
+          autoFocus
+          required
+        />
+      </div>
+      <button className="btn btn-outline-primary">Create Table</button>
+    </form>
+  );
+
+  const AddTable = () => (
+    <div className="row">
+      <div className="col-md-8 offset-md-2">
+        {showSuccess()}
+        {showError()}
+        {createTableForm()}
+      </div>
+    </div>
+  );
+
+  useEffect(() => {
+    loadTable();
+  }, []);
+
+  return (
+    <div>
       <Drawer
         title="Table"
         placement="right"
@@ -81,66 +229,6 @@ const ManageTable = () => {
           <AddTable />
         </div>
       </Drawer>
-      <hr />
-      <Card className="table text-center row-8" style={{borderRadius:20 , borderColor:'#eee' , margin:5}}>
-      <table className="table text-center row-8">
-        <thead className="thead-dark">
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Qrcode</th>
-            <th scope="col">Manage</th>
-          </tr>
-        </thead>
-        {tables.map((data, index) => (
-          <tbody>
-            <tr key={index}>
-              <td>{data._id}</td>
-              <td>{data.name}</td>
-              <td> <QRCode value="b"/></td>
-              <td>
-              <Link to={`/menu/${data._id}`}>
-                  <span
-                    type="button"
-                    className="btn btn-success"
-                    style={{ marginRight: 10 }}
-                  >
-                    Menu
-                  </span>
-                </Link>
-
-                <Link to={`/manage/table/update/${data._id}`}>
-                  <span
-                    type="button"
-                    className="btn btn-primary"
-                    style={{ marginRight: 10 }}
-                  >
-                    Edit
-                  </span>
-                </Link>
-
-                <button
-                  onClick={() => delTable(data._id)}
-                  type="button"
-                  className="btn btn-danger"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        ))}
-      </table>
-      </Card>
-    </div>
-  );
-
-  useEffect(() => {
-    loadTable();
-  }, []);
-
-  return (
-    <div>
       <Demo />
     </div>
   );

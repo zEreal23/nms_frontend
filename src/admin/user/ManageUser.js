@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Drawer, Card, Table } from "antd";
-import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { getUsers, deleteUser } from "../apiAdmin";
 import Staff from "../../image/user.png";
@@ -125,6 +125,7 @@ const ManageUser = () => {
         </div>
       </Drawer>
       <Card
+        hoverable
         title={`Total ${users.length} Staff`}
         extra={
           <div style={{ margin: 10 }}>
