@@ -22,7 +22,6 @@ const ManageOrder = () => {
         console.log(data.error);
       } else {
         setTable(data);
-        console.log(data);
       }
     });
   };
@@ -42,35 +41,36 @@ const ManageOrder = () => {
     return (
       <>
         {order.map((data, index) => (
-          <Card key={index} hoverable>
-            <h5>Order No. {data._id}</h5>
+          <Card key={index} hoverable title={`Order No.${data._id}`}>
             {data.products.map((menu, index) => (
-              <Card key={index}>
-                <Row>
-                  <Col>
-                    <img
-                      src={`${API}/product/photo/${menu.product._id}`}
-                      alt="photoMenu"
-                      className="rounded-circle"
-                      style={{
-                        height: "50px",
-                        width: "auto",
-                        borderRadius: "10%",
-                      }}
-                    />
-                  </Col>
-                  <Col>
-                    <h5 style={{ marginLeft: 10 }}>{menu.product.name}</h5>
-                  </Col>
-                  <Col>
-                    <h5 style={{ marginLeft: 10 }}>quantity: {menu.quantity}</h5>
-                    <h5>amount: {data.amount}</h5>
-                  </Col>
-                </Row>
-              </Card>
+              <Row key={index}>
+                <Col>
+                  <img
+                    src={`${API}/product/photo/${menu.product._id}`}
+                    alt="photoMenu"
+                    style={{
+                      height: "50px",
+                      width: "50px",
+                      borderRadius:5,
+                      marginBottom:5
+                    }}
+                  />
+                </Col>
+                <Col>
+                    <div><h5 style={{ marginLeft: 10 }}>{menu.product.name}</h5></div>
+                </Col>
+                <Col>
+                  <h5 style={{ marginLeft: 10 }}>quantity: {menu.quantity} </h5>
+                </Col>
+              </Row>
             ))}
+            <div style={{marginTop:10}}>
+              <h5>Status: {data.status}</h5>
+            </div>
           </Card>
         ))}
+        <hr/>
+        <div style={{marginTop: 10}}>
           <NumberFormat
             value={getTotal()}
             displayType={"text"}
@@ -78,15 +78,13 @@ const ManageOrder = () => {
             prefix={"NT$ "}
             renderText={(value) => <h2>Total : {value} TWD</h2>}
           />
+        </div>
+        <button type="button" className="btn btn-outline-success">Payment</button>
       </>
     );
   };
 
-  const noOrder = () => (
-    <h2>
-      Table don't have order
-    </h2>
-  );
+  const noOrder = () => <h2>No Order</h2>;
 
   const getTotal = () => {
     return order.reduce((currentValue, nextValue) => {
@@ -132,9 +130,7 @@ const ManageOrder = () => {
         title="Order"
         hoverable
       >
-        <>
-          {order.length > 0 ? ShowItems() : noOrder()}
-        </>
+        <>{order.length > 0 ? ShowItems() : noOrder()}</>
       </Card>
     </Row>
   );

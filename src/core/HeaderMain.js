@@ -58,7 +58,7 @@ const LayoutWithRoute = ({ children, history }) => {
       <Menu.Item
         onClick={() =>
           signout(() => {
-            history.push("/signin");
+            history.push("/");
           })
         }
       >

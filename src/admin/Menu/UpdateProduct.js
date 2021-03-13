@@ -191,7 +191,7 @@ const UpdateProduct = ({ match }) => {
   const redirectUser = () => {
     if (redirectToProfile) {
       if (!error) {
-        return <Redirect to="/admin/product" />;
+        return <Redirect to="/Manage/menu" />;
       }
     }
   };

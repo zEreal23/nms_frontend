@@ -76,12 +76,11 @@ const ManageProduct = () => {
         key: index,
         id: `${data._id}`,
         photo: (
-          <div className="product-img container text-center">
+          <div className="product-img">
             <img
               src={`${API}/product/photo/${data._id}`}
               alt={data.name}
-              className="mb-3"
-              style={{ height: "50px", width: "auto", borderRadius: "10%" }}
+              style={{ height: "50px", width: "60px", borderRadius: "10%" }}
             />
           </div>
         ),
@@ -90,7 +89,7 @@ const ManageProduct = () => {
         price: `${data.price}`,
         manage: (
           <>
-            <Link to={`/Manage/menu/update/${data._id}`}>
+            <Link to={`/Manage/product/update/${data._id}`}>
               <span
                 type="button"
                 className="btn btn-primary"
