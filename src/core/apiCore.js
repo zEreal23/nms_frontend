@@ -1,4 +1,5 @@
 import { API } from "../config";
+import APIKit from '../api';
 import queryString from "query-string";
 
 export const getProducts = (tableId) => {
@@ -121,7 +122,7 @@ export const createOrder = (tableId, createOrderData) => {
 };
 
 export const postCart = (productId, tableId) => {
-  return fetch(`${API}/cart/${tableId}`, {
+  /*return fetch(`${API}/cart/${tableId}`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -132,7 +133,17 @@ export const postCart = (productId, tableId) => {
     .then((response) => {
       return response.json();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err));*/
+    console.log(productId)
+
+    return new Promise(async (resolve, reject) => {
+      try {
+          await APIKit.post(`/cart/${tableId}`, {productId: productId});
+          return resolve();
+      } catch (error) {
+          return reject(error);
+      }
+  });
 };
 
 export const getCart = (tableId) => {
