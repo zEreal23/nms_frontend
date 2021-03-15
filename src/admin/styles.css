@@ -1,0 +1,23 @@
+@media (max-width: 575.98px) {
+    .admin-page-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 0.5em;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 786.98px) {
+    .admin-page-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 0.5em;
+    }
+}
+
+@media (min-width: 787px) {
+    .admin-page-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 1em;
+    }
+}

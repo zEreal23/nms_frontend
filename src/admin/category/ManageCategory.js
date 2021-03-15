@@ -130,7 +130,10 @@ const ManageCategory = () => {
     const showError = () => {
         if (error) {
             return (
-                <div className="alert alert-danger" style={{display: error ? '' : 'none'}}>
+                <div
+                    className="alert alert-danger"
+                    style={{display: error ? '' : 'none'}}
+                >
                     {error}
                 </div>
             );
@@ -203,6 +206,7 @@ const ManageCategory = () => {
                             dataSource={tableData}
                             pagination={{pageSize: 5}}
                             style={{margin: 5}}
+                            scroll={{x: 'max-content'}}
                         />
                     </div>
                 </Card>

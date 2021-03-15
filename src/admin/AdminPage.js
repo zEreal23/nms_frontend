@@ -8,11 +8,12 @@ import MangeCetagories from './category/ManageCategory';
 import ManageStaff from './user/ManageUser';
 import ManageMenu from './Menu/ManageProduct';
 
+import './styles.css';
+
 const AdminPage = () => {
     const card = {
         borderRadius: 25,
-        width: 'auto',
-        margin: 10,
+        width: '100%',
     };
 
     const [status, setStatus] = useState('init');
@@ -21,8 +22,8 @@ const AdminPage = () => {
     // month
     const [valueMonths, setValueMonths] = useState([]);
     //Year
-    const [valueYears, setValueYears] = useState(0)
-    console.log('Year',valueYears)
+    const [valueYears, setValueYears] = useState(0);
+    console.log('Year', valueYears);
 
     const getTotalDay = () => {
         return valueDay.reduce((currentValue, nextValue) => {
@@ -40,7 +41,7 @@ const AdminPage = () => {
 
             const valueMonths = months.map((v) => v.amount);
 
-            const valueYear = year.amount
+            const valueYear = year.amount;
 
             setValueDay(valueDay);
 
@@ -63,76 +64,62 @@ const AdminPage = () => {
     }
 
     return (
-        <div className="container">
-            <Row>
-                <Col>
+        <div>
+            <br />
+            <div className="container-fluid">
+                <div className="admin-page-container">
                     <Card
                         style={card}
-                        hoverable
-                        title={<h5>Summary of weekly sales</h5>}
+                        title={<span>Summary of weekly sales</span>}
                     >
-                        <>
-                            <NumberFormat
-                                value={getTotalDay()}
-                                displayType={'text'}
-                                thousandSeparator={true}
-                                prefix={'NT$ '}
-                                renderText={(value) => (
-                                    <h5>Total : {value} TWD</h5>
-                                )}
-                            />
-                        </>
+                        <NumberFormat
+                            value={getTotalDay()}
+                            displayType={'text'}
+                            thousandSeparator={true}
+                            prefix={'NT$ '}
+                            renderText={(value) => (
+                                <span>Total : {value} TWD</span>
+                            )}
+                        />
                     </Card>
-                </Col>
-
-                <Col>
                     <Card
                         style={card}
-                        hoverable
-                        title={<h5>Summary of month sales</h5>}
+                        title={<span>Summary of month sales</span>}
                     >
-                        <>
-                            <NumberFormat
-                                value={valueMonths[0]}
-                                displayType={'text'}
-                                thousandSeparator={true}
-                                prefix={'NT$ '}
-                                renderText={(value) => (
-                                    <h5>Total : {value} TWD</h5>
-                                )}
-                            />
-                        </>
+                        <NumberFormat
+                            value={valueMonths[0]}
+                            displayType={'text'}
+                            thousandSeparator={true}
+                            prefix={'NT$ '}
+                            renderText={(value) => (
+                                <span>Total : {value} TWD</span>
+                            )}
+                        />
                     </Card>
-                </Col>
-
-                <Col>
                     <Card
                         style={card}
-                        hoverable
-                        title={<h5>Summary of year sales</h5>}
+                        title={<span>Summary of year sales</span>}
                     >
-                         <>
-                            <NumberFormat
-                                value={valueYears}
-                                displayType={'text'}
-                                thousandSeparator={true}
-                                prefix={'NT$ '}
-                                renderText={(value) => (
-                                    <h5>Total : {value} TWD</h5>
-                                )}
-                            />
-                        </>
+                        <NumberFormat
+                            value={valueYears}
+                            displayType={'text'}
+                            thousandSeparator={true}
+                            prefix={'NT$ '}
+                            renderText={(value) => (
+                                <span>Total : {value} TWD</span>
+                            )}
+                        />
                     </Card>
-                </Col>
-            </Row>
+                </div>
+            </div>
 
-            <Row>
-                <Col>
-                    <MangeCetagories />
-                    <ManageMenu />
-                    <ManageStaff />
-                </Col>
-            </Row>
+            <br />
+            <MangeCetagories />
+            <br />
+            <ManageMenu />
+            <br />
+            <ManageStaff />
+            <br />
         </div>
     );
 };
