@@ -67,7 +67,7 @@ const ManageTable = () => {
     {
       title: "manage",
       dataIndex: "manage",
-      width: 150,
+      width: 205,
     },
   ];
 

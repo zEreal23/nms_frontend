@@ -70,7 +70,7 @@ const AdminPage = () => {
                 <div className="admin-page-container">
                     <Card
                         style={card}
-                        title={<span>Summary of weekly sales</span>}
+                        title={<span>Weekly saller</span>}
                     >
                         <NumberFormat
                             value={getTotalDay()}
@@ -84,7 +84,7 @@ const AdminPage = () => {
                     </Card>
                     <Card
                         style={card}
-                        title={<span>Summary of month sales</span>}
+                        title={<span>Month saller</span>}
                     >
                         <NumberFormat
                             value={valueMonths[0]}
@@ -98,7 +98,7 @@ const AdminPage = () => {
                     </Card>
                     <Card
                         style={card}
-                        title={<span>Summary of year sales</span>}
+                        title={<span>total saller</span>}
                     >
                         <NumberFormat
                             value={valueYears}

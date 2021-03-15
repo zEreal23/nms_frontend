@@ -39,16 +39,16 @@ const ManageOrder = () => {
             });
             await loadTable();
             await orderTable(tableId);
-            setTableId('')
+            setTableId('');
             onCloseModal();
             notification.success({
-                message: 'Payment success'
-            })
+                message: 'Payment success',
+            });
         } catch (error) {
             console.log('error', error);
             notification.error({
-                message: 'Payment error'
-            })
+                message: 'Payment error',
+            });
         }
     };
 
@@ -56,7 +56,7 @@ const ManageOrder = () => {
         try {
             const data = await getOrder(tableId);
             setTableId(tableId);
-            setOrder(data.orders);
+            setOrder([...data.orders]);
         } catch (error) {
             console.log('data.error', error);
         }
@@ -76,7 +76,11 @@ const ManageOrder = () => {
                             >
                                 <h5>Status: {order[index].status}</h5>
                             </div>
-                            <Card key={index} hoverable title={`Order No.${data._id}`}>
+                            <Card
+                                key={index}
+                                hoverable
+                                title={`Order No.${data._id}`}
+                            >
                                 {data.products.map((menu, index) => {
                                     return (
                                         <Row key={index}>
@@ -95,7 +99,9 @@ const ManageOrder = () => {
                                             </Col>
                                             <Col>
                                                 <div>
-                                                    <h5 style={{marginLeft: 10}}>
+                                                    <h5
+                                                        style={{marginLeft: 10}}
+                                                    >
                                                         {menu.product.name}
                                                     </h5>
                                                 </div>
@@ -142,53 +148,63 @@ const ManageOrder = () => {
     };
 
     const AllTable = () => (
-        <Row justify="space-between">
-            <Card
-                bordered={true}
-                style={{
-                    borderRadius: 20,
-                    borderWidth: 1,
-                    width: '48%',
-                }}
-                hoverable
-                title="Table"
-            >
-                <Row gutter={[8, 16]}>
-                    {tables.map((data, index) => {
-                        const isOrder = data.cart.status;
-                        return (
-                            <Col lg={6} md={12} xs={24} key={index}>
-                                <Button
-                                    style={{
-                                        height: '100px',
-                                        width: '100%',
-                                        borderRadius: 15,
-                                        backgroundColor: isOrder ? 'red' : 'green',
-                                        color: 'white',
-                                    }}
-                                    onClick={() => orderTable(data._id)}
+        <>
+            <Row>
+                <Card
+                    bordered={true}
+                    style={{
+                        borderRadius: 20,
+                        borderWidth: 1,
+                        width: '100%',
+                    }}
+                    title="Table"
+                >
+                    <Row>
+                        {tables.map((data, index) => {
+                            const isOrder = data.cart.status;
+                            return (
+                                <Col
+                                    lg={6}
+                                    md={12}
+                                    xs={24}
+                                    key={index}
+                                    style={{padding: 10}}
                                 >
-                                    {data.name}
-                                </Button>
-                            </Col>
-                        );
-                    })}
-                </Row>
-            </Card>
-
-            <Card
-                bordered={true}
-                style={{
-                    borderRadius: 20,
-                    borderWidth: 1,
-                    width: '48%',
-                }}
-                title="Order"
-                hoverable
-            >
-                <>{order.length > 0 ? ShowItems() : noOrder()}</>
-            </Card>
-        </Row>
+                                    <Button
+                                        style={{
+                                            height: '100px',
+                                            width: '100%',
+                                            borderRadius: 15,
+                                            backgroundColor: isOrder
+                                                ? 'red'
+                                                : 'green',
+                                            color: 'white',
+                                        }}
+                                        onClick={() => orderTable(data._id)}
+                                    >
+                                        {data.name}
+                                    </Button>
+                                </Col>
+                            );
+                        })}
+                    </Row>
+                </Card>
+            </Row>
+            <br />
+            <Row>
+                <Card
+                    bordered={true}
+                    style={{
+                        borderRadius: 20,
+                        borderWidth: 1,
+                        width: '100%',
+                    }}
+                    title="Order"
+                >
+                    <>{order.length > 0 ? ShowItems() : noOrder()}</>
+                </Card>
+            </Row>
+        </>
     );
 
     useEffect(() => {
@@ -201,7 +217,10 @@ const ManageOrder = () => {
                 <Modal visible={show} onCancel={onCloseModal} onOk={onPayment}>
                     <h4>Are you sure you want to make this report?</h4>
                     <hr />
-                    <p>If you press the OK button, the information cannot be edited.</p>
+                    <p>
+                        If you press the OK button, the information cannot be
+                        edited.
+                    </p>
                 </Modal>
             )}
             {AllTable()}
