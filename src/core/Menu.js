@@ -1,22 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Card, Row, Col, Tabs} from 'antd';
-
+import {Card, Row, Col, Tabs,Spin, message} from 'antd';
 import Slider from 'react-slick';
+import { LoadingOutlined } from '@ant-design/icons';
 
 import p1 from '../image/p1.jpg';
-import Item from './item';
 import {getProducts, postCart} from './apiCore';
 import {getTable} from '../admin/apiAdmin';
-import {API, HOST} from '../config';
+import {HOST} from '../config';
 
 import './Menu.css';
-const breakPoints = [
-    {width: 1, itemsToShow: 1},
-    {width: 550, itemsToShow: 2},
-    {width: 768, itemsToShow: 3},
-    {width: 1200, itemsToShow: 4},
-];
 
 const settings = {
     dots: true,
@@ -53,18 +46,14 @@ const settings = {
     ],
 };
 
-const promotionStyle = {
-    height: '160px',
-    width: 'auto',
-    borderRadius: 20,
-    margin: 10,
-};
-
 const Home = ({match}) => {
     const [productsByArrial, setProductsByArrival] = useState([]);
     const [noTable, setNotable] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [cartNumber, setcartNumber] = useState([]);
     const [error, setError] = useState(false);
+
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
     const loadProductArrival = (tableId) => {
         getProducts(tableId).then((data) => {
@@ -73,9 +62,14 @@ const Home = ({match}) => {
             } else {
                 setProductsByArrival(data);
                 console.log('2', data);
+                setLoading(false)
             }
         });
     };
+
+    const loadingPage = () => (
+        <Spin indicator={antIcon} />
+    )
 
     const init = (tableId) => {
         getTable(tableId).then((data) => {
@@ -93,15 +87,19 @@ const Home = ({match}) => {
         init(match.params.tableId);
     }, []);
 
-    const addToCart = (product, tableId) => {
-        console.log('added');
-        postCart(product, tableId).then((data) => {
-            if (data.error) {
-                setError(data.error);
-            } else {
-                init(tableId);
-            }
-        });
+    const addToCart = async(product, tableId) => {
+        setLoading(true)
+        try{
+            await postCart(product, tableId)
+            //init(tableId);
+            setLoading(false)
+            message.success("Add to Card Success")
+        } catch (error) {
+            setError(error);
+            setLoading(false)
+            console.log(error)
+            message.error("Can't add to Card, Please try again");
+        }
     };
 
     const content = () => (
