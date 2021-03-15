@@ -29,6 +29,13 @@
         grid-gap: 0.5em;
     }
 
+    .order-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 0.5em;
+        border: 1px solid red;
+    }
+
     .img-user-menu {
         height: 200px;
         width: 100%;
@@ -45,6 +52,13 @@
         grid-gap: 0.5em;
     }
 
+    .order-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 0.5em;
+        border: 1px solid red;
+    }
+
     .img-user-menu {
       height: 250px;
       width: 100%;
@@ -59,6 +73,13 @@
         padding: 0 1em;
         grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 0.5em;
+    }
+
+    .order-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 0.5em;
+        border: 1px solid red;
     }
 
     .img-user-menu {

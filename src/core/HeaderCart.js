@@ -32,7 +32,7 @@ const LayoutWithRoute = ({children}) => {
                         <button className="button-go-back" onClick={onGoBack}>
                             <LeftOutlined size={25} />
                         </button>
-                        <span className="title-cart-user">Menu</span>
+                        <span className="title-cart-user">Cart</span>
                     </div>
                 </Header>
 

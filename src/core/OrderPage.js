@@ -8,6 +8,8 @@ import {getTable} from '../admin/apiAdmin';
 import {getOrder} from './apiCore';
 import {HOST} from '../config';
 
+import './Menu.css';
+
 const OrderPage = ({match}) => {
     const [order, setOrder] = useState([]);
     const [noTable, setNotable] = useState([]);
@@ -41,43 +43,59 @@ const OrderPage = ({match}) => {
 
     const ShowItems = () => {
         return (
-            <div>
-                <h1>Your Order</h1>
-
+            <>
                 {order.map((data, index) => (
-                    <Card key={index} hoverable>
+                    <Card
+                        key={index}
+                        hoverable
+                        title={<h3>Order No. {data._id}</h3>}
+                    >
                         {data.products.map((menu, index) => (
-                            <Card key={index}>
-                                <Row>
-                                    <Col span={24}>
-                                        <img
-                                            src={`${HOST}/${menu.product.photo}`}
-                                            alt="photoMenu"
-                                            style={{
-                                                height: 'auto',
-                                                width: '100%',
-                                                borderRadius: '5px',
-                                                objectFit: 'contain',
-                                            }}
-                                        />
-                                    </Col>
-                                    <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
-                                        <span style={{marginLeft: 10}}>
-                                            {menu.product.name}
-                                        </span>
-                                    </Col>
-                                    <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
-                                        <span style={{marginLeft: 10}}>
-                                            {menu.quantity}
-                                        </span>
-                                    </Col>
-                                </Row>
-                            </Card>
+                            <Row>
+                                <Col span={24}>
+                                    <img
+                                        src={`${HOST}/${menu.product.photo}`}
+                                        alt="photoMenu"
+                                        className="img-user-menu"
+                                    />
+                                </Col>
+                                <Col
+                                    span={12}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <span
+                                        style={{
+                                            marginLeft: 10,
+                                            fontSize: 20,
+                                        }}
+                                    >
+                                        {menu.product.name}
+                                    </span>
+                                </Col>
+                                <Col
+                                    span={12}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <span
+                                        style={{
+                                            marginLeft: 10,
+                                            fontSize: 20,
+                                        }}
+                                    >
+                                        {menu.quantity}
+                                    </span>
+                                </Col>
+                            </Row>
                         ))}
-                        <h5>amount: {data.amount}</h5>
                     </Card>
                 ))}
-            </div>
+            </>
         );
     };
 
@@ -103,7 +121,9 @@ const OrderPage = ({match}) => {
             >
                 <LeftOutlined style={{fontSize: '22px', color: 'black'}} />
             </Link>
-            {order.length > 0 ? ShowItems() : noOrder()}
+            <div>
+                {order.length > 0 ? ShowItems() : noOrder()}
+            </div>
             <div
                 style={{
                     bottom: 0,
@@ -111,9 +131,10 @@ const OrderPage = ({match}) => {
                     right: 0,
                     left: 0,
                     backgroundColor: 'white',
+                    height: 100,
+                    textAlign: 'center',
                 }}
             >
-                <hr />
                 <NumberFormat
                     value={getTotal()}
                     displayType={'text'}
