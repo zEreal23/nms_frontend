@@ -4,26 +4,54 @@ import {Card, Row, Col, Tabs,Spin, message} from 'antd';
 import Slider from 'react-slick';
 import { LoadingOutlined } from '@ant-design/icons';
 
-import p1 from '../image/p1.jpg';
+import p1 from '../image/p6.jpg'; 
+import p2 from '../image/p2.jpg';
+import p3 from '../image/p3.jpg'; 
+import p4 from '../image/p8.jpeg';
+import p5 from '../image/p9.jpg';
 import {getProducts, postCart} from './apiCore';
 import {getTable} from '../admin/apiAdmin';
 import {HOST} from '../config';
 
 import './Menu.css';
 
+const promotion = [
+    {
+        no: 1,
+        img: p1,
+    },
+    {
+        no: 2,
+        img: p2,
+    },
+    {
+        no: 3,
+        img: p3,
+    },
+    {
+        no: 4,
+        img: p4,
+    },
+    {
+        no: 5,
+        img: p5,
+    },
+
+]
+
 const settings = {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 3,
     initialSlide: 0,
     responsive: [
         {
             breakpoint: 1024,
             settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
+                slidesToShow: 2,
+                slidesToScroll: 2,
                 infinite: true,
                 dots: true,
             },
@@ -163,16 +191,16 @@ const Home = ({match}) => {
             <h1>Table No. {noTable.name}</h1>
             <div className="App">
                 <Slider {...settings}>
-                    {[1, 2, 3, 4, 5].map((value, index) => {
+                    {promotion.map((value, index) => {
                         return (
                             <div className="card-image-pomo" key={index}>
                                 <img
                                     style={{
                                         width: '100%',
                                         height: 'auto',
-                                        objectFit: 'contain',
+                                        objectFit: 'cover',
                                     }}
-                                    src={p1}
+                                    src={value.img}
                                     alt="p1"
                                 />
                             </div>
@@ -180,9 +208,6 @@ const Home = ({match}) => {
                     })}
                 </Slider>
             </div>
-
-            <br />
-            <hr />
 
             {content()}
             <Link to={`/cart/${match.params.tableId}`}>
