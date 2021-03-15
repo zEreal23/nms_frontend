@@ -50,7 +50,7 @@ const OrderPage = ({match}) => {
                         {data.products.map((menu, index) => (
                             <Card key={index}>
                                 <Row>
-                                    <Col>
+                                    <Col span={24}>
                                         <img
                                             src={`${HOST}/${menu.product.photo}`}
                                             alt="photoMenu"
@@ -62,10 +62,10 @@ const OrderPage = ({match}) => {
                                             }}
                                         />
                                     </Col>
-                                    <Col>
-                                        <h5 style={{marginLeft: 10}}>
+                                    <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
+                                        <span style={{marginLeft: 10}}>
                                             {menu.product.name}
-                                        </h5>
+                                        </span>
                                     </Col>
                                 </Row>
                             </Card>
