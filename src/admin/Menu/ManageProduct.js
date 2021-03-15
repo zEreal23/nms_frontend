@@ -59,6 +59,11 @@ const ManageProduct = () => {
             width: 150,
         },
         {
+            title: 'sold',
+            dataIndex: 'sold',
+            width: 150,
+        },
+        {
             title: 'manage',
             dataIndex: 'manage',
             width: 150,
@@ -76,8 +81,8 @@ const ManageProduct = () => {
                             src={`${HOST}/${data.photo}`}
                             alt={data.name}
                             style={{
-                                height: '80px',
-                                width: '60px',
+                                height: '100px',
+                                width: '70px',
                                 borderRadius: '10%',
                                 objectFit: 'contain',
                             }}
@@ -87,6 +92,7 @@ const ManageProduct = () => {
                 category: `${data.category.name}`,
                 name: `${data.name}`,
                 price: `${data.price}`,
+                sold: `${data.sold}`,
                 manage: (
                     <>
                         <Link to={`/Manage/product/update/${data._id}`}>
