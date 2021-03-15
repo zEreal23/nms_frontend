@@ -28,7 +28,7 @@ import UpdateTable from './admin/table/UpdateTable';
 import ManageOrder from './admin/Order/ManageOrder';
 
 import ReportPage from './admin/Report/ReportPage';
-import saleReport from './admin/Report/saleReport';
+import SaleReport from './admin/Report/SaleReport';
 
 import AdminRoute from './auth/AdminRoute';
 import MenuRoute from './auth/MenuRoute';
@@ -69,7 +69,7 @@ function Routes() {
                 />
 
                 <AdminRoute path="/Report/bestseller" exact component={ReportPage} />
-                <AdminRoute path="/Report/saleReport" exact component={saleReport} />
+                <AdminRoute path="/Report/saleReport" exact component={SaleReport} />
 
                 <CartRoute path="/cart/:tableId" exact component={CartPage} />
 

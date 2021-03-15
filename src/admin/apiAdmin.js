@@ -364,6 +364,36 @@ export const getBadSeles = () => {
     });
 };
 
+/**
+ *
+ * @returns report days
+ */
+export const getIcomeByDay = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const {data} = await APIKit.get(`/report/days`);
+            return resolve(data);
+        } catch (error) {
+            return reject(error);
+        }
+    });
+};
+
+/**
+ *
+ * @returns report months
+ */
+export const getIcomeByMonth = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const {data} = await APIKit.get(`/report/months`);
+            return resolve(data);
+        } catch (error) {
+            return reject(error);
+        }
+    });
+};
+
 export const createTable = (userId, token, t) => {
     return fetch(`${API}/table/create/${userId}`, {
         method: 'POST',
