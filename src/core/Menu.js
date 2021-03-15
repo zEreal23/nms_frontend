@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Card, Row, Col, Tabs} from 'antd';
 import Carousel from 'react-elastic-carousel';
+import Slider from 'react-slick';
 
 import p1 from '../image/p1.jpg';
 import Item from './item';
@@ -16,6 +17,14 @@ const breakPoints = [
     {width: 768, itemsToShow: 3},
     {width: 1200, itemsToShow: 4},
 ];
+
+const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+};
 
 const promotionStyle = {
     height: '160px',
@@ -88,15 +97,33 @@ const Home = ({match}) => {
                                         }}
                                     />
                                 </Col>
-                                <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
-                                    <span className="text-menu-user">{product.name}</span>
+                                <Col
+                                    span={12}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <span className="text-menu-user">
+                                        {product.name}
+                                    </span>
                                 </Col>
-                                <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
-                                    <span className="text-menu-user">{product.price}</span>
+                                <Col
+                                    span={12}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <span className="text-menu-user">
+                                        {product.price}
+                                    </span>
                                 </Col>
                                 <Col span={24}>
                                     <button
-                                        onClick={() => addToCart(product._id, noTable._id)}
+                                        onClick={() =>
+                                            addToCart(product._id, noTable._id)
+                                        }
                                         className="btn btn-outline-warning mt-2 mb-2"
                                         style={{width: '100%'}}
                                     >
@@ -118,40 +145,26 @@ const Home = ({match}) => {
         <div className="container" style={{marginTop: 20}}>
             <h1>Table No. {noTable.name}</h1>
             <div className="App">
-                <Carousel breakPoints={breakPoints}>
-                    <Item>
-                        {' '}
-                        <img alt="example" src={p1} style={promotionStyle} />
-                    </Item>
-                    <Item>
-                        {' '}
-                        <img alt="example" src={p1} style={promotionStyle} />
-                    </Item>
-                    <Item>
-                        {' '}
-                        <img alt="example" src={p1} style={promotionStyle} />
-                    </Item>
-                    <Item>
-                        {' '}
-                        <img alt="example" src={p1} style={promotionStyle} />
-                    </Item>
-                    <Item>
-                        {' '}
-                        <img alt="example" src={p1} style={promotionStyle} />
-                    </Item>
-                    <Item>
-                        {' '}
-                        <img alt="example" src={p1} style={promotionStyle} />
-                    </Item>
-                    <Item>
-                        {' '}
-                        <img alt="example" src={p1} style={promotionStyle} />
-                    </Item>
-                    <Item>
-                        {' '}
-                        <img alt="example" src={p1} style={promotionStyle} />
-                    </Item>
-                </Carousel>
+                <Slider {...settings}>
+                    <div>
+                        <h3>1</h3>
+                    </div>
+                    <div>
+                        <h3>2</h3>
+                    </div>
+                    <div>
+                        <h3>3</h3>
+                    </div>
+                    <div>
+                        <h3>4</h3>
+                    </div>
+                    <div>
+                        <h3>5</h3>
+                    </div>
+                    <div>
+                        <h3>6</h3>
+                    </div>
+                </Slider>
             </div>
             <hr />
 
