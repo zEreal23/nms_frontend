@@ -69,7 +69,7 @@ const OrderPage = ({match}) => {
                                     </Col>
                                     <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
                                         <span style={{marginLeft: 10}}>
-                                            {menu.product.quantity}
+                                            {menu.quantity}
                                         </span>
                                     </Col>
                                 </Row>
