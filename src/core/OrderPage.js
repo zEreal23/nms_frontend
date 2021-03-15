@@ -67,6 +67,11 @@ const OrderPage = ({match}) => {
                                             {menu.product.name}
                                         </span>
                                     </Col>
+                                    <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
+                                        <span style={{marginLeft: 10}}>
+                                            {menu.product.quantity}
+                                        </span>
+                                    </Col>
                                 </Row>
                             </Card>
                         ))}
