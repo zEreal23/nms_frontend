@@ -65,8 +65,7 @@ const CartPage = ({match}) => {
 
     const ShowItems = () => {
         return (
-            <div>
-                <h2>Order {`${menu.length}`} items</h2>
+            <div className="menu-container">
                 {menu.map((p, i) => (
                     <Card key={i}>
                         <Row>
@@ -74,12 +73,7 @@ const CartPage = ({match}) => {
                                 <img
                                     src={`${HOST}/${p.productId.photo}`}
                                     alt="photoMenu"
-                                    style={{
-                                        height: 'auto',
-                                        width: '100%',
-                                        borderRadius: '5px',
-                                        objectFit: 'contain',
-                                    }}
+                                    className="img-user-menu"
                                 />
                             </Col>
                             <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
@@ -126,6 +120,7 @@ const CartPage = ({match}) => {
 
     return (
         <div className="container">
+             <h2>Cart {`${menu.length}`} items</h2>
             {menu.length > 0 ? ShowItems() : noChact()}
             <div
                 style={{bottom: 0, position: 'fixed', right: 0, left: 0, backgroundColor: 'white'}}
