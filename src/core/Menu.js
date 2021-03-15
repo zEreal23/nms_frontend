@@ -26,32 +26,32 @@ const settings = {
     slidesToScroll: 4,
     initialSlide: 0,
     responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
-  };
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true,
+            },
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+                initialSlide: 2,
+            },
+        },
+        {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+            },
+        },
+    ],
+};
 
 const promotionStyle = {
     height: '160px',
@@ -104,68 +104,60 @@ const Home = ({match}) => {
         });
     };
 
-    const {TabPane} = Tabs;
-    const tab = () => (
-        <Tabs defaultActiveKey="1">
-            <TabPane tab="จานเดียว" key="1">
-                <div>
-                    {productsByArrial.map((product, i) => (
-                        <Card key={i}>
-                            <Row>
-                                <Col span={24}>
-                                    <img
-                                        src={`${HOST}/${product.photo}`}
-                                        alt="photoMenu"
-                                        style={{
-                                            height: 'auto',
-                                            width: '100%',
-                                            borderRadius: '5px',
-                                            objectFit: 'contain',
-                                        }}
-                                    />
-                                </Col>
-                                <Col
-                                    span={12}
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <span className="text-menu-user">
-                                        {product.name}
-                                    </span>
-                                </Col>
-                                <Col
-                                    span={12}
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <span className="text-menu-user">
-                                        {product.price}
-                                    </span>
-                                </Col>
-                                <Col span={24}>
-                                    <button
-                                        onClick={() =>
-                                            addToCart(product._id, noTable._id)
-                                        }
-                                        className="btn btn-outline-warning mt-2 mb-2"
-                                        style={{width: '100%'}}
-                                    >
-                                        Select
-                                    </button>
-                                </Col>
-                            </Row>
-                        </Card>
-                    ))}
-                </div>
-            </TabPane>
-            <TabPane tab="ชุดเซ็ต" key="2">
-                Content of Tab Pane 2
-            </TabPane>
-        </Tabs>
+    const content = () => (
+        <div>
+            {productsByArrial.map((product, i) => (
+                <Card key={i}>
+                    <Row>
+                        <Col span={24}>
+                            <img
+                                src={`${HOST}/${product.photo}`}
+                                alt="photoMenu"
+                                style={{
+                                    height: 'auto',
+                                    width: '100%',
+                                    borderRadius: '5px',
+                                    objectFit: 'contain',
+                                }}
+                            />
+                        </Col>
+                        <Col
+                            span={12}
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <span className="text-menu-user">
+                                {product.name}
+                            </span>
+                        </Col>
+                        <Col
+                            span={12}
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <span className="text-menu-user">
+                                {product.price}
+                            </span>
+                        </Col>
+                        <Col span={24}>
+                            <button
+                                onClick={() =>
+                                    addToCart(product._id, noTable._id)
+                                }
+                                className="btn btn-outline-warning mt-2 mb-2"
+                                style={{width: '100%'}}
+                            >
+                                Select
+                            </button>
+                        </Col>
+                    </Row>
+                </Card>
+            ))}
+        </div>
     );
 
     return (
@@ -173,23 +165,28 @@ const Home = ({match}) => {
             <h1>Table No. {noTable.name}</h1>
             <div className="App">
                 <Slider {...settings}>
-                    <div style={{display:'flex',justifyContent:'center',alignItems: 'center', width: '100%',margin: 10}}>
-                        <img style={{width: '100%',height:'auto',objectFit:'contain'}} src={p1} alt="p1"/>
-                    </div>
-                    <div style={{display:'flex',justifyContent:'center',alignItems: 'center', width: '100%'}}>
-                        <img style={{width: '100%',height:'auto',objectFit:'contain'}} src={p1} alt="p1"/>
-                    </div>
-                    <div style={{display:'flex',justifyContent:'center',alignItems: 'center', width: '100%'}}>
-                        <img style={{width: '100%',height:'auto',objectFit:'contain'}} src={p1} alt="p1"/>
-                    </div>
-                    <div style={{display:'flex',justifyContent:'center',alignItems: 'center', width: '100%'}}>
-                        <img style={{width: '100%',height:'auto',objectFit:'contain'}} src={p1} alt="p1"/>
-                    </div>
+                    {[1, 2, 3, 4, 5].map((value, index) => {
+                        return (
+                            <div className="card-image-pomo" key={index}>
+                                <img
+                                    style={{
+                                        width: '100%',
+                                        height: 'auto',
+                                        objectFit: 'contain',
+                                    }}
+                                    src={p1}
+                                    alt="p1"
+                                />
+                            </div>
+                        );
+                    })}
                 </Slider>
             </div>
+
+            <br />
             <hr />
 
-            {tab()}
+            {content()}
             <Link to={`/cart/${match.params.tableId}`}>
                 <button
                     type="button"
