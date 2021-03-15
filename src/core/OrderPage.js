@@ -46,13 +46,12 @@ const OrderPage = ({match}) => {
 
                 {order.map((data, index) => (
                     <Card key={index} hoverable>
-                        <h5>Order No. {data._id}</h5>
                         {data.products.map((menu, index) => (
                             <Card key={index}>
                                 <Row>
-                                    <Col>
+                                    <Col span={24}>
                                         <img
-                                            src={`${HOST}/${menu.photo}`}
+                                            src={`${HOST}/${menu.product.photo}`}
                                             alt="photoMenu"
                                             style={{
                                                 height: 'auto',
@@ -62,10 +61,15 @@ const OrderPage = ({match}) => {
                                             }}
                                         />
                                     </Col>
-                                    <Col>
-                                        <h5 style={{marginLeft: 10}}>
+                                    <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
+                                        <span style={{marginLeft: 10}}>
                                             {menu.product.name}
-                                        </h5>
+                                        </span>
+                                    </Col>
+                                    <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
+                                        <span style={{marginLeft: 10}}>
+                                            {menu.quantity}
+                                        </span>
                                     </Col>
                                 </Row>
                             </Card>

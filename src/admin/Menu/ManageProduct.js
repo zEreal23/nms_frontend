@@ -39,11 +39,6 @@ const ManageProduct = () => {
 
     const columns = [
         {
-            title: 'id',
-            dataIndex: 'id',
-            width: 150,
-        },
-        {
             title: 'photo',
             dataIndex: 'photo',
             width: '10%',
@@ -75,7 +70,6 @@ const ManageProduct = () => {
         products.map((data, index) => {
             tableData.push({
                 key: index,
-                id: `${data._id}`,
                 photo: (
                     <div className="product-img">
                         <img
