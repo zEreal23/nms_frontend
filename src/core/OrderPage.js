@@ -52,7 +52,7 @@ const OrderPage = ({match}) => {
                                 <Row>
                                     <Col>
                                         <img
-                                            src={`${HOST}/${menu.photo}`}
+                                            src={`${HOST}/${menu.product._id}`}
                                             alt="photoMenu"
                                             style={{
                                                 height: 'auto',
