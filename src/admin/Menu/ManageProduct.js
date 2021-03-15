@@ -81,9 +81,9 @@ const ManageProduct = () => {
                             src={`${HOST}/${data.photo}`}
                             alt={data.name}
                             style={{
-                                height: '100px',
-                                width: '70px',
-                                borderRadius: '10%',
+                                height: 'auto',
+                                width: '120px',
+                                borderRadius: 5,
                                 objectFit: 'contain',
                             }}
                         />
