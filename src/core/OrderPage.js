@@ -46,7 +46,6 @@ const OrderPage = ({match}) => {
 
                 {order.map((data, index) => (
                     <Card key={index} hoverable>
-                        <h5>Order No. {data._id}</h5>
                         {data.products.map((menu, index) => (
                             <Card key={index}>
                                 <Row>
