@@ -1,23 +1,41 @@
 import React, {useEffect, useState} from 'react';
 import {Bar, HorizontalBar} from 'react-chartjs-2';
 import {Card} from 'antd';
-import {getBestSeles} from '../apiAdmin';
+import {getBadSeles, getBestSeles} from '../apiAdmin';
 
 const ReportPage = () => {
     const [status, setStatus] = useState('init');
     const [dataBestSeles, setDataBestSeles] = useState([]);
     const [valueBestSeles, setValueBestSeles] = useState([]);
+    
+    const [dataBadSeles, setDataBadSeles] = useState([]);
+    const [valueBadSeles, setValueBadSeles] = useState([]);
+
     let maxValueBestSeles = 0;
+    let maxValueBadSeles = 0
+
     if (status === 'done') {
         maxValueBestSeles = Math.max(...valueBestSeles) * 1.25
-    } 
+        maxValueBadSeles = Math.max(...valueBadSeles) * 1.25
+    }
+
     const initialValues = async () => {
         try {
-            const data = await getBestSeles();
-            const d_seles = data.map((v) => v.name);
-            const v_seles = data.map((v) => v.amount);
-            setDataBestSeles(d_seles);
-            setValueBestSeles(v_seles);
+            const best = await getBestSeles();
+            const bad = await getBadSeles();
+
+            const bestDataSeles = best.map((v) => v.name);
+            const bestValueSeles = best.map((v) => v.amount);
+
+            const badDataSeles = bad.map((v) => v.name);
+            const badValueSeles = bad.map((v) => v.amount);
+
+            setDataBestSeles(bestDataSeles);
+            setValueBestSeles(bestValueSeles);
+
+            setDataBadSeles(badDataSeles);
+            setValueBadSeles(badValueSeles);
+
             setStatus('done');
         } catch (error) {
             console.log(error);
@@ -89,11 +107,11 @@ const ReportPage = () => {
                 <div className="container">
                     <Bar
                         data={{
-                            labels: [...dataBestSeles],
+                            labels: [...dataBadSeles],
                             datasets: [
                                 {
                                     label: ['# of popular', 'a'],
-                                    data: [...valueBestSeles],
+                                    data: [...valueBadSeles],
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)',
                                         'rgba(54, 162, 235, 0.2)',
@@ -121,7 +139,7 @@ const ReportPage = () => {
                                         ticks: {
                                             beginAtZero: true,
                                             min: 0,
-                                            max: maxValueBestSeles,
+                                            max: maxValueBadSeles,
                                         },
                                     },
                                 ],

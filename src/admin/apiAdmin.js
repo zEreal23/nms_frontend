@@ -349,6 +349,21 @@ export const getBestSeles = () => {
     });
 };
 
+/**
+ *
+ * @returns report best seller
+ */
+export const getBadSeles = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const {data} = await APIKit.get(`/report/bad-seles`);
+            return resolve(data);
+        } catch (error) {
+            return reject(error);
+        }
+    });
+};
+
 export const createTable = (userId, token, t) => {
     return fetch(`${API}/table/create/${userId}`, {
         method: 'POST',
