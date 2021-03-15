@@ -117,6 +117,7 @@ const ManagePromotion = () => {
           dataSource={tableData}
           pagination={{ pageSize: 5 }}
           style={{ margin: 5 }}
+          scroll={{ x: "max-content" }}
         />
       </Card>
     </div>

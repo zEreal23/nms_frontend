@@ -136,6 +136,7 @@ const ManageTable = () => {
             dataSource={tableData}
             pagination={{ pageSize: 5 }}
             style={{ margin: 5 }}
+            scroll={{ x: "max-content" }}
           />
         </div>
       </Card>
