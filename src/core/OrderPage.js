@@ -74,7 +74,6 @@ const OrderPage = ({match}) => {
                                 </Row>
                             </Card>
                         ))}
-
                         <h5>amount: {data.amount}</h5>
                     </Card>
                 ))}

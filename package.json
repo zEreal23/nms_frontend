@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
+    "@emotion/react": "^11.1.5",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
@@ -24,6 +25,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "react-slick": "^0.28.1",
+    "react-spinners": "^0.10.6",
     "react-to-print": "^2.12.3",
     "react-toastify": "^7.0.3",
     "slick-carousel": "^1.8.1",

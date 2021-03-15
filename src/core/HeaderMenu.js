@@ -12,7 +12,7 @@ const LayoutWithRoute = ({children}) => {
     const onToOrder = () => {
         history.push(`/order/${macth.params.tableId}`);
     };
-    
+
     return (
         <>
             <Layout className="site-layout">
@@ -34,7 +34,6 @@ const LayoutWithRoute = ({children}) => {
                         </Button>
                     </div>
                 </Header>
-
                 <Layout>
                     <Content
                         className="site-layout-background"

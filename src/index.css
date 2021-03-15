@@ -4,6 +4,8 @@
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    color: #222;
 }
 
 button:focus {

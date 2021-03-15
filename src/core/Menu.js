@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Card, Row, Col, Tabs,Spin, message} from 'antd';
+import {Card, Row, Col, Tabs, Spin, message} from 'antd';
 import Slider from 'react-slick';
-import { LoadingOutlined } from '@ant-design/icons';
+import {LoadingOutlined} from '@ant-design/icons';
 
 import p1 from '../image/p1.jpg';
 import {getProducts, postCart} from './apiCore';
@@ -50,34 +50,22 @@ const Home = ({match}) => {
     const [productsByArrial, setProductsByArrival] = useState([]);
     const [noTable, setNotable] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [cartNumber, setcartNumber] = useState([]);
-    const [error, setError] = useState(false);
-
-    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
     const loadProductArrival = (tableId) => {
         getProducts(tableId).then((data) => {
             if (data.error) {
-                setError(data.error);
             } else {
                 setProductsByArrival(data);
-                console.log('2', data);
-                setLoading(false)
+                setLoading(false);
             }
         });
     };
 
-    const loadingPage = () => (
-        <Spin indicator={antIcon} />
-    )
-
     const init = (tableId) => {
         getTable(tableId).then((data) => {
             if (data.error) {
-                setError(data.error);
             } else {
                 setNotable(data);
-                setcartNumber(data.cart.items.length);
             }
         });
     };
@@ -87,23 +75,22 @@ const Home = ({match}) => {
         init(match.params.tableId);
     }, []);
 
-    const addToCart = async(product, tableId) => {
-        setLoading(true)
-        try{
-            await postCart(product, tableId)
+    const addToCart = async (product, tableId) => {
+        setLoading(true);
+        try {
+            await postCart(product, tableId);
             //init(tableId);
-            setLoading(false)
-            message.success("Add to Card Success")
+            setLoading(false);
+            message.success('Add to Card Success');
         } catch (error) {
-            setError(error);
-            setLoading(false)
-            console.log(error)
+            setLoading(false);
+            console.log(error);
             message.error("Can't add to Card, Please try again");
         }
     };
 
     const content = () => (
-        <div>
+        <div className="menu-container">
             {productsByArrial.map((product, i) => (
                 <Card key={i}>
                     <Row>
@@ -111,19 +98,14 @@ const Home = ({match}) => {
                             <img
                                 src={`${HOST}/${product.photo}`}
                                 alt="photoMenu"
-                                style={{
-                                    height: 'auto',
-                                    width: '100%',
-                                    borderRadius: '5px',
-                                    objectFit: 'contain',
-                                }}
+                                className="img-user-menu"
                             />
                         </Col>
                         <Col
-                            span={12}
+                            span={18}
                             style={{
                                 display: 'flex',
-                                justifyContent: 'center',
+                                justifyContent: 'flex-start',
                             }}
                         >
                             <span className="text-menu-user">
@@ -131,7 +113,7 @@ const Home = ({match}) => {
                             </span>
                         </Col>
                         <Col
-                            span={12}
+                            span={6}
                             style={{
                                 display: 'flex',
                                 justifyContent: 'center',
@@ -146,8 +128,10 @@ const Home = ({match}) => {
                                 onClick={() =>
                                     addToCart(product._id, noTable._id)
                                 }
+                                style={{opacity: loading ? 0.5 : 1}}
                                 className="btn btn-outline-warning mt-2 mb-2"
                                 style={{width: '100%'}}
+                                disabled={loading}
                             >
                                 Select
                             </button>
@@ -159,8 +143,8 @@ const Home = ({match}) => {
     );
 
     return (
-        <div style={{marginTop: 20}}>
-            <h1>Table No. {noTable.name}</h1>
+        <div style={{marginTop: 40}}>
+            <h2>Table No. {noTable.name}</h2>
             <div className="App">
                 <Slider {...settings}>
                     {[1, 2, 3, 4, 5].map((value, index) => {
@@ -191,7 +175,7 @@ const Home = ({match}) => {
                     className="btn btn-primary btn-lg btn-block"
                     style={{bottom: 0, position: 'fixed', right: 0, left: 0}}
                 >
-                    Cart{' '}
+                    Cart
                 </button>
             </Link>
         </div>
