@@ -6,7 +6,7 @@ import NumberFormat from 'react-number-format';
 
 import {getTable} from '../admin/apiAdmin';
 import {getOrder} from './apiCore';
-import {API} from '../config';
+import {HOST, API} from '../config';
 
 const OrderPage = ({match}) => {
     const [order, setOrder] = useState([]);
@@ -52,6 +52,7 @@ const OrderPage = ({match}) => {
                                 <Row>
                                     <Col>
                                         <img
+<<<<<<< HEAD
                                             src={`${API}/product/photo/${menu.product._id}`}
                                             alt="photoMenu"
                                             className="rounded-circle"
@@ -61,6 +62,18 @@ const OrderPage = ({match}) => {
                                                 borderRadius: '10%',
                                             }}
                                         />
+=======
+                                            src={`${HOST}/${menu.photo}`}
+                                            alt="photoMenu"
+                                            style={{
+                                                height: 'auto',
+                                                width: '100%',
+                                                borderRadius: '5px',
+                                                objectFit: 'contain',
+                                            }}
+                                        />
+                                      
+>>>>>>> 2906bb024174af5aa74153916f9421ddc0af1c4c
                                     </Col>
                                     <Col>
                                         <h5 style={{marginLeft: 10}}>
