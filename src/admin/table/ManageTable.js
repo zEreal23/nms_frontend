@@ -78,10 +78,10 @@ const ManageTable = () => {
         key: index,
         id: `${data._id}`,
         name: `${data.name}`,
-        QR_code: (<QRCode value={`http://localhost:3000/menu/${data._id}`}/>),
+        QR_code: (<QRCode value={`http://178.128.50.205:3021/menu/${data._id}`}/>),
         manage: (
           <>
-            <Link to={`/menu/${data._id}`}>
+            <Link to={`/menu/${data._id}`} target="_blank">
               <span
                 type="button"
                 className="btn btn-success"
@@ -113,7 +113,7 @@ const ManageTable = () => {
   }
 
   const Demo = () => (
-    <div>
+    <div className="container-fluid">
       <Card
         hoverable
         title={`Total ${tables.length} Table`}
@@ -227,7 +227,7 @@ const ManageTable = () => {
       >
         <div>
           <AddTable />
-        </div>
+        </div>  
       </Drawer>
       <Demo />
     </div>

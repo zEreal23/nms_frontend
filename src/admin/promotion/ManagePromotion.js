@@ -95,7 +95,7 @@ const ManagePromotion = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container-fluid">
       <Card hoverable title={`Total ${promotions.length} Promotion`} 
       extra={
         <div style={{ margin: 10 }}>

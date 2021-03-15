@@ -110,7 +110,7 @@ const ManageUser = () => {
   }
 
   return (
-    <div>
+    <div className="container-fluid">
       <Drawer
         title="Staff"
         placement="right"

@@ -1,24 +1,56 @@
 .trigger {
-  font-size: 30px;
-  line-height: 10px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
+    font-size: 30px;
+    line-height: 10px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
 }
 
 .trigger:hover {
-  color: #1890ff;
+    color: #1890ff;
 }
 
 .logo {
-  height: 32px;
-  margin: 14px;
-  text-align: center;
+    height: 32px;
+    margin: 14px;
+    text-align: center;
 }
 
+.title-menu-user {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.content-header-menu-user {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* cart */
+.title-cart-user {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.content-header-cart-user {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.button-go-back {
+  background: transparent;
+  border: 0;
+}
 .site-layout-background {
-  background: #eee;
+    background: #eee;
 }
 .site-layout .site-layout-background {
-  background: #fff;
+    background: #fff;
+    box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
 }
