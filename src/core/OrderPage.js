@@ -21,7 +21,6 @@ const OrderPage = ({match}) => {
                 setError(data.error);
             } else {
                 setOrder(data.orders);
-                console.log('1', data.orders);
             }
         });
     };
@@ -47,52 +46,59 @@ const OrderPage = ({match}) => {
                 {order.map((data, index) => (
                     <Card
                         key={index}
-                        hoverable
-                        title={<h3>Order No. {data._id}</h3>}
+                        style={{marginBottom: 10}}
+                        bodyStyle={{padding: 0}}
+                        title={
+                            <span className="text-menu-user">
+                                Order No. {data._id}
+                            </span>
+                        }
                     >
-                        {data.products.map((menu, index) => (
-                            <Row>
-                                <Col span={24}>
-                                    <img
-                                        src={`${HOST}/${menu.product.photo}`}
-                                        alt="photoMenu"
-                                        className="img-user-menu"
-                                    />
-                                </Col>
-                                <Col
-                                    span={12}
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <span
+                        <div className="order-container">
+                            {data.products.map((menu, iInner) => (
+                                <Row key={iInner}>
+                                    <Col span={24}>
+                                        <img
+                                            src={`${HOST}/${menu.product.photo}`}
+                                            alt="photoMenu"
+                                            className="img-user-menu"
+                                        />
+                                    </Col>
+                                    <Col
+                                        span={18}
                                         style={{
-                                            marginLeft: 10,
-                                            fontSize: 20,
+                                            display: 'flex',
+                                            justifyContent: 'flex-start',
                                         }}
                                     >
-                                        {menu.product.name}
-                                    </span>
-                                </Col>
-                                <Col
-                                    span={12}
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <span
+                                        <span
+                                            style={{
+                                                marginLeft: 10,
+                                                fontSize: 20,
+                                            }}
+                                        >
+                                            {menu.product.name}
+                                        </span>
+                                    </Col>
+                                    <Col
+                                        span={6}
                                         style={{
-                                            marginLeft: 10,
-                                            fontSize: 20,
+                                            display: 'flex',
+                                            justifyContent: 'center',
                                         }}
                                     >
-                                        {menu.quantity}
-                                    </span>
-                                </Col>
-                            </Row>
-                        ))}
+                                        <span
+                                            style={{
+                                                marginLeft: 10,
+                                                fontSize: 20,
+                                            }}
+                                        >
+                                            {menu.quantity}
+                                        </span>
+                                    </Col>
+                                </Row>
+                            ))}
+                        </div>
                     </Card>
                 ))}
             </>
@@ -121,26 +127,16 @@ const OrderPage = ({match}) => {
             >
                 <LeftOutlined style={{fontSize: '22px', color: 'black'}} />
             </Link>
-            <div>
-                {order.length > 0 ? ShowItems() : noOrder()}
-            </div>
-            <div
-                style={{
-                    bottom: 0,
-                    position: 'fixed',
-                    right: 0,
-                    left: 0,
-                    backgroundColor: 'white',
-                    height: 100,
-                    textAlign: 'center',
-                }}
-            >
+            <div>{order.length > 0 ? ShowItems() : noOrder()}</div>
+            <div className="footer-order-menu">
                 <NumberFormat
                     value={getTotal()}
                     displayType={'text'}
                     thousandSeparator={true}
                     prefix={'NT$ '}
-                    renderText={(value) => <h1>Total : {value} TWD</h1>}
+                    renderText={(value) => (
+                        <h1 style={{paddingTop: 20}}>Total : {value} TWD</h1>
+                    )}
                 />
             </div>
         </div>
