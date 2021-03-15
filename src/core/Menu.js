@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Card, Row, Col, message} from 'antd';
+import {Card, Row, Col, message, Select} from 'antd';
 import Slider from 'react-slick';
 
 import p1 from '../image/p6.jpg';
@@ -8,12 +8,13 @@ import p2 from '../image/p2.jpg';
 import p3 from '../image/p3.jpg';
 import p4 from '../image/p8.jpeg';
 import p5 from '../image/p9.jpg';
-import {getProducts, postCart} from './apiCore';
-import {getTable} from '../admin/apiAdmin';
+import {getProductsMenu, postCart} from './apiCore';
+import {getTableMenu, getCategories} from '../admin/apiAdmin';
 import {HOST} from '../config';
 
 import './Menu.css';
 
+const {Option} = Select;
 const promotion = [
     {
         no: 1,
@@ -75,30 +76,26 @@ const settings = {
 const Home = ({match}) => {
     const [productsByArrial, setProductsByArrival] = useState([]);
     const [noTable, setNotable] = useState([]);
+    const [category, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [filterCategory, setFilterCategory] = useState('all');
 
-    const loadProductArrival = (tableId) => {
-        getProducts(tableId).then((data) => {
-            if (data.error) {
-            } else {
-                setProductsByArrival(data);
-                setLoading(false);
-            }
-        });
-    };
+    const initialValues = async (tableId) => {
+        try {
+            const noTable = await getTableMenu(tableId);
+            const dataProduct = await getProductsMenu(tableId);
+            const dataCate = await getCategories();
 
-    const init = (tableId) => {
-        getTable(tableId).then((data) => {
-            if (data.error) {
-            } else {
-                setNotable(data);
-            }
-        });
+            setCategories(dataCate);
+            setNotable(noTable);
+            setProductsByArrival(dataProduct);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     useEffect(() => {
-        loadProductArrival(match.params.tableId);
-        init(match.params.tableId);
+        initialValues(match.params.tableId);
     }, []);
 
     const addToCart = async (product, tableId) => {
@@ -115,10 +112,12 @@ const Home = ({match}) => {
         }
     };
 
+    const filterData = filterCategory !== 'all' ? productsByArrial.filter( v => v.category._id === filterCategory) : productsByArrial;
+    
     const content = () => (
         <div className="menu-container">
-            {productsByArrial.map((product, i) => (
-                <Card key={i} >
+            {filterData.map((product, i) => (
+                <Card key={i}>
                     <Row>
                         <Col span={24}>
                             <img
@@ -168,6 +167,10 @@ const Home = ({match}) => {
         </div>
     );
 
+    const onChangeCategory = (value) => {
+        setFilterCategory(value)
+    }
+
     return (
         <div style={{marginTop: 40}}>
             <h2>Table No. {noTable.name}</h2>
@@ -192,6 +195,23 @@ const Home = ({match}) => {
             </div>
             <br />
             <hr />
+            {/* filters */}
+            <div className="filters-menu-user">
+                <Select
+                    defaultValue="all"
+                    style={{width: 150}}
+                    onChange={onChangeCategory}
+                >
+                    <Option value="all">All</Option>
+                    {category.map((cat, index) => {
+                        return (
+                            <Option value={cat._id.toString()} key={index}>
+                                {cat.name}
+                            </Option>
+                        );
+                    })}
+                </Select>
+            </div>
             {content()}
             <Link to={`/cart/${match.params.tableId}`}>
                 <button

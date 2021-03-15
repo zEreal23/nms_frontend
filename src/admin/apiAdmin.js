@@ -305,6 +305,24 @@ export const getTable = (tableId) => {
 
 /**
  *
+ * @param {String} tableId table id on table
+ * @returns {Aarray} product in store
+ */
+export const getTableMenu = (tableId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const {data} = await APIKit.get(`/table/${tableId}`);
+            return resolve(data);
+        } catch (error) {
+            return reject(error);
+        }
+    });
+};
+
+
+
+/**
+ *
  * @param {String} orderId order id on table
  * @returns status of order is complete
  */
