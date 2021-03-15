@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Card, Row, Col, Tabs, Spin, message} from 'antd';
+import {Card, Row, Col, message} from 'antd';
 import Slider from 'react-slick';
-import {LoadingOutlined} from '@ant-design/icons';
 
-import p1 from '../image/p6.jpg'; 
+import p1 from '../image/p6.jpg';
 import p2 from '../image/p2.jpg';
-import p3 from '../image/p3.jpg'; 
+import p3 from '../image/p3.jpg';
 import p4 from '../image/p8.jpeg';
 import p5 from '../image/p9.jpg';
 import {getProducts, postCart} from './apiCore';
@@ -36,12 +35,11 @@ const promotion = [
         no: 5,
         img: p5,
     },
-
-]
+];
 
 const settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -120,7 +118,7 @@ const Home = ({match}) => {
     const content = () => (
         <div className="menu-container">
             {productsByArrial.map((product, i) => (
-                <Card key={i}>
+                <Card key={i} >
                     <Row>
                         <Col span={24}>
                             <img
@@ -192,7 +190,8 @@ const Home = ({match}) => {
                     })}
                 </Slider>
             </div>
-
+            <br />
+            <hr />
             {content()}
             <Link to={`/cart/${match.params.tableId}`}>
                 <button
