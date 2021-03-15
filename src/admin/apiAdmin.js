@@ -412,6 +412,21 @@ export const getIcomeByMonth = () => {
     });
 };
 
+/**
+ *
+ * @returns report years
+ */
+ export const getIcomeByYear = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const {data} = await APIKit.get(`/report/year`);
+            return resolve(data);
+        } catch (error) {
+            return reject(error);
+        }
+    });
+};
+
 export const createTable = (userId, token, t) => {
     return fetch(`${API}/table/create/${userId}`, {
         method: 'POST',
