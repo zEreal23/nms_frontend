@@ -17,7 +17,7 @@ const ManageOrder = () => {
     const loadTable = async () => {
         try {
             const data = await getAllTable();
-            setTable(data);
+            setTable([...data]);
         } catch (error) {
             console.log(error);
         }
