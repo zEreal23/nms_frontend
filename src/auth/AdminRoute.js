@@ -7,8 +7,9 @@ import Layout from '../core/HeaderMain';
 const AdminRoute = ({component: Component, ...rest}) => {
     const renderContent = (props) => {
         const isAuth = isAuthenticated();
-        const isAdmin = isAuthenticated() && isAuthenticated().user.role === 1;
-        const isManager = false;
+        const isAdmin = isAuthenticated() && isAuthenticated().user.role === "admin";
+        const isStaff = isAuthenticated() && isAuthenticated().user.role === "staff";
+        const isChef = isAuthenticated() && isAuthenticated().user.role === "chef";
 
         if (isAuth) {
             if (isAdmin) {
@@ -19,7 +20,15 @@ const AdminRoute = ({component: Component, ...rest}) => {
                 );
             }
 
-            if (isManager) {
+            if (isStaff) {
+                return (
+                    <Layout>
+                        <Component {...props} />
+                    </Layout>
+                );
+            }
+
+            if (isChef) {
                 return (
                     <Layout>
                         <Component {...props} />

@@ -120,9 +120,16 @@ const Signin = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      if (user && user.role === 1) {
+      if (user && user.role === "admin") {
         return <Redirect to="/admin" />;
-      } else {
+      } 
+      if (user && user.role === "staff") {
+        return <Redirect to="/Manage/order" />;
+      } 
+      if (user && user.role === "chef") {
+        return <Redirect to="/Manage/order" />;
+      } 
+      else {
         return <Redirect to="/" />;
       }
     }

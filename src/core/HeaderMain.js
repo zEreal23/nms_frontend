@@ -26,34 +26,34 @@ const LayoutWithRoute = ({children, history}) => {
 
     const dropdownMenu = () => (
         <Menu>
+            {isAuthenticated() && isAuthenticated().user.role === 'admin' && (
+                <>
             <Menu.Item key="/admin">
                 <Link to="/admin" />
                 Home
             </Menu.Item>
+                    <SubMenu title="Manage">
+                        <Menu.Item key="1">
+                            <Link to="/Manage/category">Category</Link>
+                        </Menu.Item>
+                        <Menu.Item key="2">
+                            <Link to="/Manage/Menu">Menu</Link>
+                        </Menu.Item>
 
-            <Menu.Item key="/admin">
-                <Link to="/admin" />
-                Profile
-            </Menu.Item>
+                        <Menu.Item key="3">
+                            <Link to="/Manage/table">Table</Link>
+                        </Menu.Item>
 
-            <SubMenu title="Manage">
-                <Menu.Item key="1">
-                    <Link to="/Manage/category">Category</Link>
-                </Menu.Item>
-                <Menu.Item key="2">
-                    <Link to="/Manage/Menu">Menu</Link>
-                </Menu.Item>
+                        <Menu.Item key="4">
+                            <Link to="/Manage/users">Staff</Link>
+                        </Menu.Item>
 
-                <Menu.Item key="3">
-                    <Link to="/Manage/table">Table</Link>
-                </Menu.Item>
-
-                <Menu.Item key="4">
-                    <Link to="/Manage/users">Staff</Link>
-                </Menu.Item>
-
-                <Menu.Item key="5">Promotion</Menu.Item>
-            </SubMenu>
+                        <Menu.Item key="5">
+                            <Link to="/Manage/promotion">Promotion</Link>
+                        </Menu.Item>
+                    </SubMenu>
+                </>
+            )}
 
             <Menu.Item
                 onClick={() =>
@@ -77,25 +77,43 @@ const LayoutWithRoute = ({children, history}) => {
                     className="site-layout-background"
                 >
                     <div className="logo">
-                        <img src={logo} alt="logo" style={{height: 40, width: 'auto'}} />
+                        <img
+                            src={logo}
+                            alt="logo"
+                            style={{height: 40, width: 'auto'}}
+                        />
                     </div>
                     <MenuinSidebar />
                 </Sider>
 
                 <Layout>
-                    <Header className="site-layout-background" style={{padding: 0}}>
-                        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                            className: 'trigger',
-                            onClick: ToggleButton,
-                        })}
+                    <Header
+                        className="site-layout-background"
+                        style={{padding: 0}}
+                    >
+                        {React.createElement(
+                            collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+                            {
+                                className: 'trigger',
+                                onClick: ToggleButton,
+                            },
+                        )}
 
                         <Dropdown overlay={dropdownMenu}>
-                            <Button style={{margin: 15, float: 'right', borderRadius: 25}}>
-                                {`${isAuthenticated().user.name}`}
+                            <Button
+                                style={{
+                                    margin: 15,
+                                    float: 'right',
+                                    borderRadius: 25,
+                                }}
+                            >
+                                {`${isAuthenticated().user.role}`}
                                 <DownOutlined />
                             </Button>
                         </Dropdown>
-                        <NotificationOutlined style={{margin: 20, float: 'right', fontSize: 20}} />
+                        <NotificationOutlined
+                            style={{margin: 20, float: 'right', fontSize: 20}}
+                        />
                     </Header>
 
                     <Content style={{margin: 5}}>
