@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useRouteMatch} from 'react-router-dom';
 import {Card, Row, Col, message, Select} from 'antd';
 import Slider from 'react-slick';
 
@@ -73,12 +73,14 @@ const settings = {
     ],
 };
 
-const Home = ({match}) => {
+const Home = () => {
     const [productsByArrial, setProductsByArrival] = useState([]);
     const [noTable, setNotable] = useState([]);
     const [category, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [filterCategory, setFilterCategory] = useState('all');
+    const match = useRouteMatch();
+    const tableId = match.params.tableId;
 
     const initialValues = async (tableId) => {
         try {
@@ -95,8 +97,8 @@ const Home = ({match}) => {
     };
 
     useEffect(() => {
-        initialValues(match.params.tableId);
-    }, []);
+        initialValues(tableId);
+    }, [tableId]);
 
     const addToCart = async (product, tableId) => {
         setLoading(true);
@@ -112,8 +114,11 @@ const Home = ({match}) => {
         }
     };
 
-    const filterData = filterCategory !== 'all' ? productsByArrial.filter( v => v.category._id === filterCategory) : productsByArrial;
-    
+    const filterData =
+        filterCategory !== 'all'
+            ? productsByArrial.filter((v) => v.category._id === filterCategory)
+            : productsByArrial;
+
     const content = () => (
         <div className="menu-container">
             {filterData.map((product, i) => (
@@ -168,8 +173,8 @@ const Home = ({match}) => {
     );
 
     const onChangeCategory = (value) => {
-        setFilterCategory(value)
-    }
+        setFilterCategory(value);
+    };
 
     return (
         <div style={{marginTop: 40}}>
