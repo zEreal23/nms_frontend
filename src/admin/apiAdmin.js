@@ -114,10 +114,6 @@ export const getCategory = (categoryId) => {
         .catch((err) => console.log(err));
 };
 
-/**
- * Get caregories for option select
- * @returns {Array} all categories
- */
 export const getCategories = () => {
     return new Promise(async (resolve, reject) => {
         try {

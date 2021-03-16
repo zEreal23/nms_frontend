@@ -25,7 +25,7 @@ APIKit.interceptors.response.use(
 APIKit.interceptors.request.use(
     (config) => {
         const result = JSON.parse(localStorage.getItem('jwt'));
-        const token = result.token;
+        const token = result?.token;
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         } else {
