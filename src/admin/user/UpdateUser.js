@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, Card } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import { isAuthenticated } from "../../auth";
@@ -15,8 +15,6 @@ const UpdateUser = ({ match }) => {
     error: false,
     success: false,
   });
-
-  const [form] = Form.useForm();
 
   const { Option } = Select;
 
@@ -49,6 +47,10 @@ const UpdateUser = ({ match }) => {
     setValue({ ...values, error: false, [name]: e.target.value });
   };
 
+  const handleRole = (name) => {
+    setValue({...values, error: false, role: name, });
+  };
+
   const clickSubmit = () => {
     updateUser(match.params.userId, token, { name }).then((data) => {
       if (data.error) {
@@ -65,27 +67,6 @@ const UpdateUser = ({ match }) => {
     });
   };
 
-  const onRoleChange = (role) => {
-    switch (role) {
-      case "Admin":
-        form.setFieldsValue({
-          note: "Can Access to data and edit everything",
-        });
-        return;
-
-      case "Staff":
-        form.setFieldsValue({
-          note: "Hi, lady!",
-        });
-        return;
-
-      case "Chef":
-        form.setFieldsValue({
-          note: "Hi there!",
-        });
-        return;
-    }
-  };
 
   const updateForm = (name, email, password, role) => (
     <Form
@@ -103,7 +84,7 @@ const UpdateUser = ({ match }) => {
           prefix={<UserOutlined className="site-form-item-icon" />}
           type="text"
           //placeholder="Input nickname"
-          value={values.name}
+          value={name}
           onChange={handleChange("name")}
         />
       </Form.Item>
@@ -134,7 +115,7 @@ const UpdateUser = ({ match }) => {
       <Form.Item name="role" label="Role">
           <Select
             placeholder="Select a option and change input text above"
-            onChange={onRoleChange("role")}
+            onChange={handleRole}
             value={role}
             allowClear
           >
@@ -154,8 +135,6 @@ const UpdateUser = ({ match }) => {
 
   const newUpdateForm = (name, email, password, role) => (
     <form onSubmit={clickSubmit}>
-      <h4>Edit Form</h4>
-
       <div className="form-group">
         <label className="text-muted">Name</label>
         <input
@@ -184,7 +163,6 @@ const UpdateUser = ({ match }) => {
           onChange={handleChange("Password")}
           value={password}
           autoFocus
-          required
         />
       </div>
 
@@ -201,16 +179,6 @@ const UpdateUser = ({ match }) => {
       <button className="btn btn-outline-primary" style={{ margin: 10 }}>
         Update
       </button>
-
-      <Link to={"/users"}>
-        <span
-          type="button"
-          className="btn btn-outline-warning"
-          style={{ marginRight: 10 }}
-        >
-          Back
-        </span>
-      </Link>
     </form>
   );
 
@@ -224,7 +192,9 @@ const UpdateUser = ({ match }) => {
           alignItems: "center",
         }}
       >
+        <Card title={<h4>Edit Form</h4>} style={{borderRadius:10}}>
         {newUpdateForm(name, email, password, role)}
+        </Card>
       </div>
     </div>
   );

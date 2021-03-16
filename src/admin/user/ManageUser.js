@@ -71,6 +71,11 @@ const ManageUser = () => {
       width: 150,
     },
     {
+      title: "email",
+      dataIndex: "email",
+      width: 150,
+    },
+    {
       title: "manage",
       dataIndex: "manage",
       width: 150,
@@ -85,6 +90,7 @@ const ManageUser = () => {
         id: `${data._id}`,
         name: `${data.name}`,
         role: `${data.role}`,
+        email: `${data.email}`,
         manage: (
           <>
             <Link to={`/Manage/user/update/${data._id}`}>
@@ -112,7 +118,7 @@ const ManageUser = () => {
   return (
     <div className="container-fluid">
       <Drawer
-        title="Staff"
+        title="Create Staff"
         placement="right"
         closeable={false}
         onClose={onClose}

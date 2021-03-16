@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format';
 import {getAllTable, onPaymentOrder} from '../apiAdmin';
 import {getOrder} from '../../core/apiCore';
 import {HOST} from '../../config';
+import {isAuthenticated} from '../../auth'
 
 const ManageOrder = () => {
     const [tables, setTable] = useState([]);
@@ -128,6 +129,7 @@ const ManageOrder = () => {
                         renderText={(value) => <h2>Total : {value} TWD</h2>}
                     />
                 </div>
+                {isAuthenticated()&&isAuthenticated().user.role === 'admin' && (
                 <button
                     type="button"
                     className="btn btn-outline-success"
@@ -135,6 +137,16 @@ const ManageOrder = () => {
                 >
                     Payment
                 </button>
+                )}
+                {isAuthenticated()&&isAuthenticated().user.role === 'staff' && (
+                <button
+                    type="button"
+                    className="btn btn-outline-success"
+                    onClick={() => onShowModal()}
+                >
+                    Payment
+                </button>
+                )}
             </>
         );
     };
