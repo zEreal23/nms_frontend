@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Drawer, Card, Table } from "antd";
+import { Drawer, Card, Table, Image } from "antd";
 import QRCode from "qrcode.react";
 import { Link } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";

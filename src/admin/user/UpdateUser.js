@@ -47,12 +47,9 @@ const UpdateUser = ({ match }) => {
     setValue({ ...values, error: false, [name]: e.target.value });
   };
 
-  const handleRole = (name) => {
-    setValue({...values, error: false, role: name, });
-  };
 
   const clickSubmit = () => {
-    updateUser(match.params.userId, token, { name }).then((data) => {
+    updateUser(match.params.userId, token, { name, email, role }).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
@@ -66,72 +63,6 @@ const UpdateUser = ({ match }) => {
       }
     });
   };
-
-
-  const updateForm = (name, email, password, role) => (
-    <Form
-      name="normal_login"
-      className="login-form"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={clickSubmit}
-    >
-      <Form.Item
-        name={name}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          type="text"
-          //placeholder="Input nickname"
-          value={name}
-          onChange={handleChange("name")}
-        />
-      </Form.Item>
-
-      <Form.Item
-        name="Email"
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          type="email"
-          placeholder="example@domain.com"
-          value={email}
-          onChange={handleChange("email")}
-        />
-      </Form.Item>
-
-      <Form.Item
-        name="password"
-        hasFeedback
-      >
-        <Input.Password
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          value={password}
-          onChange={handleChange("password")}
-        />
-      </Form.Item>
-
-      <Form.Item name="role" label="Role">
-          <Select
-            placeholder="Select a option and change input text above"
-            onChange={handleRole}
-            value={role}
-            allowClear
-          >
-            <Option value="admin">Admin</Option>
-            <Option value="staff">Staff</Option>
-            <Option value="chef">Chef</Option>
-          </Select>
-        </Form.Item>
-
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
-  );
 
   const newUpdateForm = (name, email, password, role) => (
     <form onSubmit={clickSubmit}>
@@ -179,6 +110,17 @@ const UpdateUser = ({ match }) => {
       <button className="btn btn-outline-primary" style={{ margin: 10 }}>
         Update
       </button>
+
+                <Link to={'/Manage/users'}>
+                    <span
+                        type="button"
+                        className="btn btn-outline-warning"
+                        style={{marginRight: 10}}
+                    >
+                        Back
+                    </span>
+                </Link>
+         
     </form>
   );
 
@@ -192,7 +134,7 @@ const UpdateUser = ({ match }) => {
           alignItems: "center",
         }}
       >
-        <Card title={<h4>Edit Form</h4>} style={{borderRadius:10}}>
+        <Card title={<h4>Edit Form</h4>} style={{borderRadius:10, width: '500px'}}>
         {newUpdateForm(name, email, password, role)}
         </Card>
       </div>

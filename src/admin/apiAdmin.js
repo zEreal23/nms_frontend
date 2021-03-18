@@ -441,7 +441,7 @@ export const createTable = (userId, token, t) => {
         });
 };
 
-export const updateTable = (tableId, userId, token, table) => {
+export const updateTable = (tableId, userId, token, name) => {
     return fetch(`${API}/table/${tableId}/${userId}`, {
         method: 'PUT',
         headers: {
@@ -450,7 +450,7 @@ export const updateTable = (tableId, userId, token, table) => {
             Accept: 'application/json',
             Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(table),
+        body: JSON.stringify(name),
     })
         .then((response) => {
             return response.json();
